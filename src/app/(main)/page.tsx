@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { useCart } from '@/context/cart-context';
 import { HeroSection } from '@/components/hero-section';
+import { useI18n } from '@/context/i18n-context';
 
 function ProductCard({ product }: { product: import('@/lib/types').Product }) {
   const { dispatch } = useCart();
@@ -29,7 +30,7 @@ function ProductCard({ product }: { product: import('@/lib/types').Product }) {
         <CardDescription className="mt-2">{product.description}</CardDescription>
       </CardContent>
       <CardFooter className="p-6 pt-0 flex justify-between items-center">
-        <p className="text-xl font-bold text-primary">${product.price.toFixed(2)}</p>
+        <p className="text-xl font-bold text-primary">₪{product.price.toFixed(2)}</p>
         <Button onClick={() => dispatch({ type: 'ADD_ITEM', payload: product })}>Add to Cart</Button>
       </CardFooter>
     </Card>
@@ -39,6 +40,7 @@ function ProductCard({ product }: { product: import('@/lib/types').Product }) {
 
 export default function Home() {
   const featuredProducts = products.slice(0, 3);
+  const { t } = useI18n();
 
   return (
     <>
@@ -47,9 +49,9 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-headline font-bold">Our Featured Treats</h2>
+            <h2 className="text-4xl md:text-5xl font-headline font-bold">{t('home.featuredTitle')}</h2>
             <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
-              Hand-picked for you. These are the goodies our customers can&apos;t get enough of.
+              {t('home.featuredSubtitle')}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -59,7 +61,7 @@ export default function Home() {
           </div>
           <div className="text-center mt-12">
              <Button asChild variant="outline" size="lg">
-              <Link href="/products">View All Products <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              <Link href="/products">{t('home.viewAllProducts')} <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
           </div>
         </div>

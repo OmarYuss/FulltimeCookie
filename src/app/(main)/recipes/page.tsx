@@ -28,7 +28,7 @@ function RecipeCard({ recipe }: { recipe: import('@/lib/types').Recipe }) {
       <CardFooter>
         <Button asChild className="w-full">
             <Link href={`/recipes/${recipe.id}`}>
-                {recipe.isPaid ? `Unlock for $${recipe.price.toFixed(2)}` : 'View Recipe'}
+                {recipe.isPaid ? `Unlock for ₪${recipe.price.toFixed(2)}` : 'View Recipe'}
                 <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
         </Button>

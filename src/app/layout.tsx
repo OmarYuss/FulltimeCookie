@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { CartProvider } from "@/context/cart-context"
 import { ThemeProvider } from "@/components/theme-provider"
+import { I18nProvider } from '@/context/i18n-context';
 
 export const metadata: Metadata = {
   title: 'Fulltime Cookie',
@@ -31,10 +32,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CartProvider>
-            {children}
-            <Toaster />
-          </CartProvider>
+          <I18nProvider>
+            <CartProvider>
+              {children}
+              <Toaster />
+            </CartProvider>
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

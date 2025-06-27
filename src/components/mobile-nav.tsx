@@ -2,11 +2,13 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu } from "lucide-react"
+import { Menu, LogIn } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { Logo } from "./logo"
+import { useI18n } from "@/context/i18n-context"
+import { Separator } from "./ui/separator"
 
 type NavItem = {
   name: string
@@ -19,6 +21,7 @@ interface MobileNavProps {
 
 export function MobileNav({ navItems }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const { t } = useI18n()
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -44,6 +47,16 @@ export function MobileNav({ navItems }: MobileNavProps) {
                 </Link>
             </SheetClose>
           ))}
+          <Separator className="my-2" />
+          <SheetClose asChild>
+            <Link
+              href="/login"
+              className="flex items-center gap-2 px-3 py-2 text-lg font-medium rounded-md hover:bg-accent hover:text-accent-foreground"
+            >
+              <LogIn className="w-5 h-5" />
+              {t('header.login')}
+            </Link>
+          </SheetClose>
         </nav>
       </SheetContent>
     </Sheet>

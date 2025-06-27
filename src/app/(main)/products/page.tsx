@@ -37,7 +37,7 @@ function ProductCard({ product }: { product: Product }) {
         )}
       </CardContent>
       <CardFooter className="p-6 pt-0 flex justify-between items-center">
-        <p className="text-2xl font-bold text-primary">${product.price.toFixed(2)}</p>
+        <p className="text-2xl font-bold text-primary">₪{product.price.toFixed(2)}</p>
         <Button onClick={() => dispatch({ type: 'ADD_ITEM', payload: product })}>Add to Cart</Button>
       </CardFooter>
     </Card>

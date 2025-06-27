@@ -4,6 +4,7 @@ import { useState, useEffect, type SVGProps } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { useI18n } from '@/context/i18n-context';
 
 const Cupcake = (props: SVGProps<SVGSVGElement>) => (
     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -31,6 +32,7 @@ export function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
   const [chips, setChips] = useState<any[]>([]);
   const [heroHeight, setHeroHeight] = useState(0);
+  const { t } = useI18n();
 
   useEffect(() => {
     // Generate chips on client-side to avoid hydration mismatch
@@ -63,17 +65,17 @@ export function HeroSection() {
     <section id="hero-section" className="relative w-full h-[80vh] bg-background overflow-hidden">
       <div className="absolute inset-0 z-10 container h-full flex flex-col items-center justify-center text-center">
         <h1 className="text-5xl md:text-7xl font-headline font-black text-foreground drop-shadow-lg">
-          Baked with Love, Delivered with Joy
+          {t('home.heroTitle')}
         </h1>
         <p className="mt-4 max-w-2xl text-lg md:text-xl text-muted-foreground">
-          Discover our delightful collection of cookies, cakes, and baked goods, made from scratch with the finest ingredients.
+          {t('home.heroSubtitle')}
         </p>
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
           <Button asChild size="lg" className="font-bold">
-            <Link href="/products">Shop All Products</Link>
+            <Link href="/products">{t('home.shopAll')}</Link>
           </Button>
           <Button asChild size="lg" variant="secondary">
-            <Link href="/recipes">Find a Recipe</Link>
+            <Link href="/recipes">{t('home.findRecipe')}</Link>
           </Button>
         </div>
       </div>

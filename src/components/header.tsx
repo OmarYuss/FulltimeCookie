@@ -1,14 +1,20 @@
+"use client";
+
 import Link from 'next/link'
 import { Logo } from '@/components/logo'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { CartSheet } from '@/components/cart-sheet'
 import { MobileNav } from '@/components/mobile-nav'
+import { useI18n } from '@/context/i18n-context'
+import { LanguageSwitcher } from './language-switcher';
+import { Button } from './ui/button';
 
 export default function Header() {
+  const { t } = useI18n();
   const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Products', href: '/products' },
-    { name: 'Recipes', href: '/recipes' },
+    { name: t('header.home'), href: '/' },
+    { name: t('header.products'), href: '/products' },
+    { name: t('header.recipes'), href: '/recipes' },
   ]
 
   return (
@@ -29,8 +35,14 @@ export default function Header() {
           </nav>
         </div>
         <div className="flex items-center gap-2 sm:gap-4">
+          <LanguageSwitcher />
           <ThemeToggle />
           <CartSheet />
+           <div className="hidden md:block">
+            <Button asChild variant="outline">
+              <Link href="/login">{t('header.login')}</Link>
+            </Button>
+          </div>
           <div className="md:hidden">
             <MobileNav navItems={navItems} />
           </div>

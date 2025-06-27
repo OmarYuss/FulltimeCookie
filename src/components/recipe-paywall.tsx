@@ -58,7 +58,7 @@ export function RecipePaywall({ recipe }: RecipePaywallProps) {
                 Get instant access to all steps, tips, and tricks from our expert bakers.
               </p>
               <Button size="lg" onClick={handleUnlock}>
-                Unlock for ${recipe.price.toFixed(2)}
+                Unlock for ₪{recipe.price.toFixed(2)}
               </Button>
             </div>
           </div>
