@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { handleSpecialOrder } from "@/ai/flows/special-order-flow";
 import { useState } from "react";
+import { Label } from "@/components/ui/label";
 
 const specialOrderSchema = (t: (key: string) => string) => z.object({
   type: z.string().min(1, t('specialOrder.typePlaceholder')),
