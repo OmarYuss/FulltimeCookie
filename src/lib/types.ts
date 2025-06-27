@@ -52,3 +52,14 @@ export type Recipe = {
 export type CartItem = Product & {
   quantity: number;
 };
+
+export type OrderStatus =
+  | 'Pending' // For all orders waiting for admin action (approval, pricing, etc.)
+  | 'Accepted' // Confirmed by all parties, in the queue to be made
+  | 'inCreation' // The order is being prepared
+  | 'inWait' // Order is ready for pickup or delivery
+  | 'inDelivery' // Order is out for delivery
+  | 'isDone' // Order has been received by the customer
+  | 'AwaitingUserApproval' // Specific to special orders where a quote has been sent
+  | 'Rejected' // Specific to special orders where the quote was rejected
+  | 'Cancelled'; // For any order that is cancelled

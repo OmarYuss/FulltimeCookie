@@ -1,13 +1,17 @@
 'use server';
 /**
  * @fileOverview Handles special order requests.
- * In a real application, this flow would trigger a workflow:
- * 1. Save the request to a database with a 'pending' status.
- * 2. Notify an admin through email or a dashboard.
- * 3. Await admin action (setting a price, accepting/rejecting).
- * 4. Notify the user of the admin's decision.
- *
- * For now, this is a placeholder that simulates a successful submission.
+ * This flow models the first step of the special order process.
+ * 
+ * The full workflow is:
+ * 1. User submits a request, which is marked as 'Pending'.
+ * 2. An admin reviews the request, accepts it, and provides a price.
+ * 3. The user is notified with the price offer.
+ * 4. If the user accepts, the order becomes 'Accepted' and enters the regular creation flow.
+ * 5. If the user rejects, they are prompted to start a WhatsApp conversation with an admin.
+ * 
+ * This flow handles step 1. In a real application, this would save the
+ * request to a database and notify an admin.
  */
 
 import { ai } from '@/ai/genkit';
@@ -30,12 +34,10 @@ const specialOrderFlow = ai.defineFlow(
     outputSchema: SpecialOrderOutputSchema,
   },
   async (input) => {
-    // In a real app, you'd have database logic here.
-    // For now, we just log it to the server console.
-    console.log('New Special Order Request:', input);
+    // In a real app, you'd save this to a database with status 'Pending'.
+    console.log("New Special Order Request Received (Status: Pending):", input);
     
-    // This is a placeholder for a more complex workflow.
-    // The actual user interaction for this form now happens via WhatsApp.
+    // Simulate a successful submission.
     return {
       success: true,
       message: "Your request has been submitted successfully!",

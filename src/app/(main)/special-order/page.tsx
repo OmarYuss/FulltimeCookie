@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
+import { handleSpecialOrder } from "@/ai/flows/special-order-flow";
 
 const specialOrderSchema = (t: (key: string) => string) => z.object({
   type: z.string().min(1, t('specialOrder.typePlaceholder')),
@@ -37,40 +38,30 @@ export default function SpecialOrderPage() {
 
   async function onSubmit(values: z.infer<ReturnType<typeof specialOrderSchema>>) {
     setIsLoading(true);
-    
-    // Using a placeholder phone number. In a real app, this would come from an environment variable.
-    const phoneNumber = "972501234567"; 
-    
-    const messageLines = [
-      "Hello! I'd like to make a special order.",
-      "",
-      `Type: ${values.type}`,
-      `Contains: ${values.contains || 'Not specified'}`,
-      `Description: ${values.description}`,
-      `Inspiration Link: ${values.inspirationLink || 'Not provided'}`
-    ];
-    const message = messageLines.join('\n');
-
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
     try {
-        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-        
+      const result = await handleSpecialOrder(values);
+      if (result.success) {
         toast({
-            title: t('specialOrder.successTitle'),
-            description: "We're redirecting you to WhatsApp to send your request.",
+          title: t('specialOrder.successTitle'),
+          description: t('specialOrder.successDescription'),
         });
-
         form.reset();
-    } catch (error) {
-        console.error("WhatsApp redirection error:", error);
+      } else {
         toast({
-            variant: "destructive",
-            title: t('specialOrder.errorTitle'),
-            description: "Could not open WhatsApp. Please try again or contact us directly.",
+          variant: "destructive",
+          title: t('specialOrder.errorTitle'),
+          description: result.message || t('specialOrder.errorDescription'),
         });
+      }
+    } catch (error) {
+      console.error("Special order submission error:", error);
+      toast({
+        variant: "destructive",
+        title: t('specialOrder.errorTitle'),
+        description: t('specialOrder.errorDescription'),
+      });
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   }
 
