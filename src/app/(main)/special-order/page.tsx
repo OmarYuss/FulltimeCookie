@@ -43,7 +43,7 @@ export default function SpecialOrderPage() {
       if (result.success) {
         toast({
           title: t('specialOrder.successTitle'),
-          description: t('specialOrder.successDescription'),
+          description: result.message || t('specialOrder.successDescription'),
         });
         form.reset();
       } else {

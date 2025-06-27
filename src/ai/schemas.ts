@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ORDER_STATUSES } from '@/lib/types';
 
 export const SpecialOrderInputSchema = z.object({
   type: z.string().describe("The type of baked good requested (e.g., Cake, Cookies)."),
@@ -8,9 +9,17 @@ export const SpecialOrderInputSchema = z.object({
 });
 export type SpecialOrderInput = z.infer<typeof SpecialOrderInputSchema>;
 
-export const SpecialOrderOutputSchema = z.object({
+
+export const SpecialOrderRequestSchema = SpecialOrderInputSchema.extend({
+    id: z.string(),
+    status: z.enum(ORDER_STATUSES),
+});
+export type SpecialOrderRequest = z.infer<typeof SpecialOrderRequestSchema>;
+
+
+export const SpecialOrderResponseSchema = z.object({
   success: z.boolean().describe("Whether the submission was processed successfully."),
   message: z.string().describe("A confirmation message for the user."),
-  orderId: z.string().optional().describe("A unique ID for the created order request."),
+  orderRequest: SpecialOrderRequestSchema.optional().describe("The created order request details."),
 });
-export type SpecialOrderOutput = z.infer<typeof SpecialOrderOutputSchema>;
+export type SpecialOrderResponse = z.infer<typeof SpecialOrderResponseSchema>;

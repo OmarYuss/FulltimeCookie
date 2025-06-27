@@ -53,13 +53,31 @@ export type CartItem = Product & {
   quantity: number;
 };
 
-export type OrderStatus =
-  | 'Pending' // For all orders waiting for admin action (approval, pricing, etc.)
-  | 'Accepted' // Confirmed by all parties, in the queue to be made
-  | 'inCreation' // The order is being prepared
-  | 'inWait' // Order is ready for pickup or delivery
-  | 'inDelivery' // Order is out for delivery
-  | 'isDone' // Order has been received by the customer
-  | 'AwaitingUserApproval' // Specific to special orders where a quote has been sent
-  | 'Rejected' // Specific to special orders where the quote was rejected
-  | 'Cancelled'; // For any order that is cancelled
+// Defined as a const array to be usable in Zod schemas
+export const ORDER_STATUSES = [
+  'Pending',
+  'Accepted',
+  'inCreation',
+  'inWait',
+  'inDelivery',
+  'isDone',
+  'AwaitingUserApproval',
+  'Rejected',
+  'Cancelled',
+] as const;
+
+export type OrderStatus = (typeof ORDER_STATUSES)[number];
+
+
+export type Order = {
+  id: string;
+  date: string;
+  status: OrderStatus;
+  itemsSummary: string;
+  total: number;
+};
+
+export type SpecialOrderRequest = import('./schemas').SpecialOrderInput & {
+  id: string;
+  status: OrderStatus;
+};

@@ -15,33 +15,54 @@
  */
 
 import { ai } from '@/ai/genkit';
+import { notifyAdminOfNewOrder } from '@/services/notification-service';
 import { 
     SpecialOrderInputSchema, 
     type SpecialOrderInput, 
-    SpecialOrderOutputSchema, 
-    type SpecialOrderOutput 
+    SpecialOrderRequestSchema,
+    type SpecialOrderRequest,
+    type SpecialOrderResponse,
 } from '@/ai/schemas';
 
 // Export a wrapper function that can be called from client components.
-export async function handleSpecialOrder(input: SpecialOrderInput): Promise<SpecialOrderOutput> {
-  return specialOrderFlow(input);
+export async function handleSpecialOrder(input: SpecialOrderInput): Promise<SpecialOrderResponse> {
+  try {
+    const orderRequest = await specialOrderFlow(input);
+    return {
+      success: true,
+      message: "Your request has been submitted successfully and is now pending review.",
+      orderRequest,
+    };
+  } catch (error) {
+    console.error("Error in special order flow:", error);
+    return {
+      success: false,
+      message: "An error occurred while submitting your request. Please try again later.",
+    };
+  }
 }
 
 const specialOrderFlow = ai.defineFlow(
   {
     name: 'specialOrderFlow',
     inputSchema: SpecialOrderInputSchema,
-    outputSchema: SpecialOrderOutputSchema,
+    outputSchema: SpecialOrderRequestSchema,
   },
   async (input) => {
-    // In a real app, you'd save this to a database with status 'Pending'.
-    console.log("New Special Order Request Received (Status: Pending):", input);
-    
-    // Simulate a successful submission.
-    return {
-      success: true,
-      message: "Your request has been submitted successfully!",
-      orderId: `SO-${Date.now()}` // Simulate a unique ID
+    // 1. Create the order request object with 'Pending' status.
+    const newOrderRequest: SpecialOrderRequest = {
+      ...input,
+      id: `SO-${Date.now()}`,
+      status: 'Pending',
     };
+    
+    // In a real app, you'd save this to a database here.
+    console.log("New Special Order Request Created (Status: Pending):", newOrderRequest);
+    
+    // 2. Trigger notifications to admins.
+    await notifyAdminOfNewOrder(newOrderRequest);
+
+    // 3. Return the created request object.
+    return newOrderRequest;
   }
 );

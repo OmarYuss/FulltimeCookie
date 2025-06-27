@@ -1,4 +1,4 @@
-import type { Product, Recipe } from './types';
+import type { Product, Recipe, Order } from './types';
 
 export const products: Product[] = [
   {
@@ -263,3 +263,12 @@ export const recipes: Recipe[] = [
       reviews: 180,
   }
 ];
+
+export const mockOrders: Order[] = [
+  { id: 'ORD-1024', date: '2024-07-20', status: 'isDone', itemsSummary: 'Red Velvet Cupcakes (x1)', total: 24.00 },
+  { id: 'ORD-1023', date: '2024-07-18', status: 'inDelivery', itemsSummary: 'Classic Cheesecake (x1)', total: 165.00 },
+  { id: 'ORD-1022', date: '2024-07-18', status: 'inCreation', itemsSummary: 'Chocolate Chip Cookies (x2)', total: 24.00 },
+  { id: 'ORD-1021', date: '2024-07-17', status: 'Accepted', itemsSummary: 'Sourdough Bread (x1)', total: 30.00 },
+  { id: 'SO-1721511674296', date: '2024-07-16', status: 'Pending', itemsSummary: 'Special Request: Cake', total: 0.00 },
+  { id: 'ORD-1019', date: '2024-07-15', status: 'Cancelled', itemsSummary: 'Vegan Oatmeal Cookies (x1)', total: 15.00 },
+]

@@ -9,7 +9,7 @@ import { useI18n } from '@/context/i18n-context'
 import { LanguageSwitcher } from './language-switcher';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, User } from 'lucide-react';
 
 export default function Header() {
   const { t } = useI18n();
@@ -65,9 +65,23 @@ export default function Header() {
           <ThemeToggle />
           <CartSheet />
            <div className="hidden md:block">
-            <Button asChild variant="outline">
-              <Link href="/login">{t('header.login')}</Link>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon" className="rounded-full">
+                  <User className="h-5 w-5" />
+                  <span className="sr-only">Open user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href="/profile/orders">My Orders</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                   <Link href="/login">Logout</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           <div className="md:hidden">
             <MobileNav navItems={navItems} />
