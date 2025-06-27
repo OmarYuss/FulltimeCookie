@@ -1,13 +1,34 @@
+export type ProductVariation = {
+  id: string;
+  name: string;
+  priceModifier: number;
+  inStock: boolean;
+};
+
+export type ProductPackageType = {
+  id: string;
+  name: string;
+  price: number;
+};
+
 export type Product = {
   id: string;
   name: string;
   description: string;
   price: number;
-  image: string;
+  images: string[];
+  dataAiHint: string;
   category: 'Cookies' | 'Cupcakes' | 'Cakes' | 'Goods';
+  tags: string[];
+  details: {
+    contains?: string;
+    prepTime?: string;
+    pricePer?: string;
+  };
+  variations?: ProductVariation[];
+  packageTypes?: ProductPackageType[];
   hasRecipe: boolean;
   recipeId?: string;
-  dataAiHint: string;
 };
 
 export type Ingredient = {

@@ -2,41 +2,11 @@
 
 import { products } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { useCart } from '@/context/cart-context';
 import { HeroSection } from '@/components/hero-section';
 import { useI18n } from '@/context/i18n-context';
-
-function ProductCard({ product }: { product: import('@/lib/types').Product }) {
-  const { dispatch } = useCart();
-  return (
-     <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-      <CardHeader className="p-0">
-        <div className="relative h-56 w-full">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-cover"
-            data-ai-hint={product.dataAiHint}
-          />
-        </div>
-      </CardHeader>
-      <CardContent className="p-6 flex-grow">
-        <CardTitle className="font-headline text-2xl">{product.name}</CardTitle>
-        <CardDescription className="mt-2">{product.description}</CardDescription>
-      </CardContent>
-      <CardFooter className="p-6 pt-0 flex justify-between items-center">
-        <p className="text-xl font-bold text-primary">₪{product.price.toFixed(2)}</p>
-        <Button onClick={() => dispatch({ type: 'ADD_ITEM', payload: product })}>Add to Cart</Button>
-      </CardFooter>
-    </Card>
-  )
-}
-
+import Link from 'next/link';
+import { ProductCard } from '@/components/product-card';
 
 export default function Home() {
   const featuredProducts = products.slice(0, 3);
