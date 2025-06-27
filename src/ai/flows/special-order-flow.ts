@@ -11,7 +11,6 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'zod';
 import { 
     SpecialOrderInputSchema, 
     type SpecialOrderInput, 
@@ -35,17 +34,11 @@ const specialOrderFlow = ai.defineFlow(
     // For now, we just log it to the server console.
     console.log('New Special Order Request:', input);
     
-    // We can even use an LLM to generate a nice confirmation message.
-    const { output } = await ai.generate({
-        prompt: `A user has submitted a special order for a "${input.type}". Briefly and warmly confirm that their request has been received and that you will get back to them with a quote soon.`,
-        output: {
-            schema: z.object({ confirmationMessage: z.string() })
-        }
-    });
-
+    // This is a placeholder for a more complex workflow.
+    // The actual user interaction for this form now happens via WhatsApp.
     return {
       success: true,
-      message: output?.confirmationMessage || "Your request has been submitted successfully!",
+      message: "Your request has been submitted successfully!",
       orderId: `SO-${Date.now()}` // Simulate a unique ID
     };
   }

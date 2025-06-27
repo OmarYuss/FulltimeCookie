@@ -10,7 +10,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { handleSpecialOrder } from "@/ai/flows/special-order-flow";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 
@@ -38,25 +37,38 @@ export default function SpecialOrderPage() {
 
   async function onSubmit(values: z.infer<ReturnType<typeof specialOrderSchema>>) {
     setIsLoading(true);
+    
+    // Using a placeholder phone number. In a real app, this would come from an environment variable.
+    const phoneNumber = "972501234567"; 
+    
+    const messageLines = [
+      "Hello! I'd like to make a special order.",
+      "",
+      `Type: ${values.type}`,
+      `Contains: ${values.contains || 'Not specified'}`,
+      `Description: ${values.description}`,
+      `Inspiration Link: ${values.inspirationLink || 'Not provided'}`
+    ];
+    const message = messageLines.join('\n');
+
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
     try {
-      // In a real app, you would handle file uploads to a storage bucket
-      // and pass the URL to the flow.
-      const result = await handleSpecialOrder(values);
-      if (result.success) {
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        
         toast({
-          title: t('specialOrder.successTitle'),
-          description: t('specialOrder.successDescription'),
+            title: t('specialOrder.successTitle'),
+            description: "We're redirecting you to WhatsApp to send your request.",
         });
+
         form.reset();
-      } else {
-        throw new Error("Flow returned failure");
-      }
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: t('specialOrder.errorTitle'),
-        description: t('specialOrder.errorDescription'),
-      });
+        console.error("WhatsApp redirection error:", error);
+        toast({
+            variant: "destructive",
+            title: t('specialOrder.errorTitle'),
+            description: "Could not open WhatsApp. Please try again or contact us directly.",
+        });
     } finally {
         setIsLoading(false);
     }
