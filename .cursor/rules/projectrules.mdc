@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# AI AGENT EXECUTION RULES
+1. **Atomic Changes**  
+   - 1 feature/test per commit  
+   - Commit messages: `[Module] Action` (e.g., `[Auth] Add JWT validation`)  
+
+2. **File Structure Mandates**  
+/server
+/prisma → Schema/migrations
+/api → API routes (REST)
+/services → Business logic
+/src
+/lib/api → Axios client
+
+3. **Validation Hierarchy**  
+- Frontend: React Hook Form + Zod  
+- Backend: Zod + Express Validator  
+- Database: Prisma schema constraints  
+
+4. **Testing Protocol**  
+- Jest: All backend services  
+- Cypress: Critical user flows  
+- 80% coverage before deployment  
+
+5. **Security Requirements**  
+- .env validation with `envalid`  
+- Row-level security in PostgreSQL  
+
+- Parameterized queries only  

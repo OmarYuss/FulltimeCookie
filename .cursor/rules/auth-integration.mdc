@@ -1,0 +1,34 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# PHASE 3: AUTHENTICATION
+## GOAL
+JWT-based auth with NextAuth.js
+
+## STEPS
+1. **Comprehend**  
+   - Audit `src/context/AuthContext` for required fields  
+
+2. **Evaluate**  
+   - Risk: Session fixation → Implement token rotation  
+   - Confidence: 100% (use `next-auth/jwt`)  
+
+3. **Act**  
+   ```typescript
+   // pages/api/auth/[...nextauth].ts
+   providers: [
+     CredentialsProvider({
+       authorize: async ({ email, password }) => {
+         const user = await prisma.user.findUnique({ where: { email } });
+         if (bcrypt.compare(password, user.password)) return user;
+       }
+     })
+   ]
+
+4. **Critique**
+
+    - Verify: Test login with invalid credentials → 401 status
+
+    - Rollback: Enable email magic link fallback

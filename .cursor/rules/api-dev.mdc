@@ -1,0 +1,37 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# PHASE 2: API LAYER DEVELOPMENT
+## GOAL
+REST endpoints for all CRUD operations
+
+## STEPS
+1. **Comprehend**  
+   - Map frontend data usage in `pages/` to API routes  
+
+2. **Evaluate**  
+   - Risk: N+1 queries → Use Prisma `include` optimization  
+   - Confidence: 90% (test with loader.io)  
+
+3. **Act**  
+   ```typescript
+   // server/api/products/GET.ts
+   export default async (req, res) => {
+     const products = await prisma.product.findMany({
+       include: { orders: true }
+     });
+     res.json(products);
+   }
+   Create:
+
+    GET /api/products
+
+    POST /api/orders (authenticated)
+
+4. **Critique**
+
+    - Verify: Cypress test for 200 status on all endpoints
+
+    - Rollback: Revert if response time > 500ms

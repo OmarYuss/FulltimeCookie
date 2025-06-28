@@ -1,0 +1,39 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# PHASE 1: POSTGRES & PRISMA SETUP
+## GOAL
+Containerized PostgreSQL with Prisma ORM
+
+## STEPS
+1. **Comprehend**  
+   - Analyze `src/lib/data.ts` for entity relationships  
+   - Identify core models: User, Product, Order, OrderItem  
+
+2. **Evaluate**  
+   - Risk: Missing null constraints → Add default values  
+   - Confidence: 95% (match frontend types)  
+
+3. **Act**  
+   ```prisma
+   // server/prisma/schema.prisma
+   model Product {
+     id          String   @id @default(uuid())
+     name        String
+     price       Float
+     description String
+     image       String?
+     orders      OrderItem[]
+   }
+
+    - Run: npx prisma migrate dev --name init
+    - Seed DB from data.ts
+
+4. **Critique**
+
+    - Verify: SELECT * FROM products; returns 12 items
+
+
+    - Rollback: Delete migration if seed fails

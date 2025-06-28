@@ -1,0 +1,45 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# PHASE 5: DEPLOYMENT
+## GOAL
+Dockerized production environment
+
+## STEPS
+1. **Comprehend**  
+   - Inventory: Next.js build output, PostgreSQL init scripts  
+
+2. **Evaluate**  
+   - Risk: Secret exposure → Use Docker secrets  
+   - Confidence: 100% (multi-stage build)  
+
+3. **Act**  
+   ```dockerfile
+   # Dockerfile.prod
+   FROM node:18-alpine as builder
+   COPY . .
+   RUN npm run build
+
+   FROM node:18-alpine
+   COPY --from=builder .next .next
+   CMD ["npm", "start"]
+
+    # docker-compose.yml
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+  db:
+    image: postgres:15
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+4. **Critique**
+
+    - Verify: docker-compose up creates operational containers
+    - Rollback: Add healthcheck probes
+

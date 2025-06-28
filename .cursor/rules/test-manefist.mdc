@@ -1,0 +1,23 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# VALIDATION CHECKLIST
+## DATABASE TESTS
+- [ ] Prisma seed completes in < 3s  
+- [ ] Row-level security: User A cannot access User B's orders  
+
+## API TESTS
+- [ ] GET /api/products → 200 + array of 12 items  
+- [ ] POST /api/orders → 401 when unauthenticated  
+
+## FRONTEND TESTS
+- [ ] Add-to-cart persists after refresh (localStorage sync)  
+- [ ] Checkout flow completes with Stripe test mode  
+
+## SECURITY AUDIT
+- [ ] SQL injection attempt fails (Prisma parameterization)  
+- [ ] CSP headers block inline scripts  
+
+- [ ] Auth tokens expire after 24h  
