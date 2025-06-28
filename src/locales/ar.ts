@@ -9,7 +9,7 @@ export const ar = {
     categories: {
       cookies: 'بسكويت',
       cupcakes: 'كب كيك',
-      cakes: 'كيك',
+      cakes: 'كعك',
       goods: 'مخبوزات',
     }
   },

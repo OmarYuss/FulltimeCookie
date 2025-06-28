@@ -61,13 +61,29 @@ export const ORDER_STATUSES = [
   'inWait',
   'inDelivery',
   'isDone',
-  'AwaitingUserApproval',
-  'Rejected',
+  'inOffer',
+  'aOffer',
+  'rOffer',
   'Cancelled',
 ] as const;
 
 export type OrderStatus = (typeof ORDER_STATUSES)[number];
 
+export const DISPLAY_ORDER_STATUSES: {
+ statusCode: OrderStatus;
+ displayValue: string;
+}[] = [
+  { statusCode: 'Pending', displayValue: 'Pending' },
+  { statusCode: 'Accepted', displayValue: 'Accepted' },
+  { statusCode: 'inCreation', displayValue: 'Being Prepared' },
+  { statusCode: 'inWait', displayValue: 'Waiting Delivery' },
+  { statusCode: 'inDelivery', displayValue: 'Being Delivered' },
+  { statusCode: 'isDone', displayValue: 'Done' },
+  { statusCode: 'inOffer', displayValue: 'Baker\'s offer waiting' },
+  { statusCode: 'aOffer', displayValue: 'Accepted' },
+  { statusCode: 'rOffer', displayValue: 'Offer Rejected' },
+  { statusCode: 'Cancelled', displayValue: 'Cancelled' },
+];
 
 export type Order = {
   id: string;
