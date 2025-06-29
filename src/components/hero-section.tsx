@@ -19,7 +19,7 @@ export function HeroSection({
     >
       <div className="absolute inset-0 z-0">
         <div className="relative h-full w-full">
-            <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 h-[calc(100vh-5rem)]">
+            <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 h-full">
                 <div className="relative col-span-2 row-span-2 bg-gray-200">
                      <Image src="https://placehold.co/800x800.png" alt="Featured bake 1" fill className="object-cover" data-ai-hint="artisan bread" />
                 </div>
