@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import type { Recipe } from '@/lib/types';
 import { Button } from './ui/button';
 import { Lock } from 'lucide-react';
-import { useCart } from '@/context/cart-context';
+import { useCartStore } from '@/stores/cart-store';
 import { useToast } from '@/hooks/use-toast';
 
 interface RecipePaywallProps {
@@ -13,7 +13,7 @@ interface RecipePaywallProps {
 
 export function RecipePaywall({ recipe }: RecipePaywallProps) {
   const [isUnlocked, setIsUnlocked] = useState(!recipe.isPaid);
-  const { dispatch } = useCart();
+  const addItem = useCartStore((state) => state.addItem);
   const { toast } = useToast();
 
   const handleUnlock = () => {
@@ -27,9 +27,12 @@ export function RecipePaywall({ recipe }: RecipePaywallProps) {
         image: 'https://placehold.co/600x400.png',
         dataAiHint: 'recipe book',
         category: 'Goods',
-        hasRecipe: false
+        tags: ['Recipe'],
+        hasRecipe: false,
+        details: {},
+        images: ['https://placehold.co/600x400.png'],
     }
-    dispatch({ type: 'ADD_ITEM', payload: recipeProduct });
+    addItem(recipeProduct);
     setIsUnlocked(true);
     toast({
       title: "Recipe Added to Cart!",

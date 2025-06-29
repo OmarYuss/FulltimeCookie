@@ -7,14 +7,14 @@ import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { Label } from "./ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { useCart } from "@/context/cart-context";
+import { useCartStore } from "@/stores/cart-store";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { Input } from "./ui/input";
 
 export function ProductPurchaseForm({ product }: { product: Product }) {
   const { t } = useI18n();
-  const { dispatch } = useCart();
+  const addItem = useCartStore((state) => state.addItem);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariationId, setSelectedVariationId] = useState<string | undefined>(product.variations?.[0]?.id);
   const [selectedPackageId, setSelectedPackageId] = useState<string | undefined>(product.packageTypes?.[0]?.id);
@@ -36,8 +36,8 @@ export function ProductPurchaseForm({ product }: { product: Product }) {
 
   const handleAddToCart = () => {
     // A real implementation would pass variation/package details to the cart
-    const itemToAdd = { ...product, price: totalPrice / quantity };
-    dispatch({ type: 'ADD_ITEM', payload: { ...itemToAdd, quantity: 1 }});
+    const itemToAdd = { ...product, price: totalPrice / quantity, quantity };
+    addItem(itemToAdd);
   }
 
   return (

@@ -9,27 +9,32 @@ import { useI18n } from '@/context/i18n-context'
 import { LanguageSwitcher } from './language-switcher';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { ChevronDown, User } from 'lucide-react';
+import { ChevronDown, User, LogOut, LayoutGrid } from 'lucide-react';
 
 export default function Header() {
   const { t } = useI18n();
-  const navItems = [
-    { name: t('header.home'), href: '/' },
-    { name: t('header.recipes'), href: '/recipes' },
-  ];
   
   const productCategories = [
-    { name: t('header.categories.cookies'), href: '/products?tag=Cookies'},
-    { name: t('header.categories.cupcakes'), href: '/products?tag=Cupcakes'},
-    { name: t('header.categories.cakes'), href: '/products?tag=Cakes'},
-    { name: t('header.categories.goods'), href: '/products?tag=Goods'},
+    { name: t('header.categories.cookies'), href: '/shop?tag=Cookies'},
+    { name: t('header.categories.cupcakes'), href: '/shop?tag=Cupcakes'},
+    { name: t('header.categories.cakes'), href: '/shop?tag=Cakes'},
+    { name: t('header.categories.goods'), href: '/shop?tag=Goods'},
   ]
+  
+  const navItems = [
+    { name: t('header.home'), href: '/' },
+    { name: t('header.allProducts'), href: '/shop' },
+    { name: t('header.recipes'), href: '/recipes' },
+    { name: t('header.specialOrder'), href: '/special-order' },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 items-center justify-between">
         <div className="flex items-center gap-6">
-          <Logo />
+          <Link href="/">
+            <Logo />
+          </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
              <Link href="/" className="transition-colors hover:text-primary">
                 {t('header.home')}
@@ -41,7 +46,7 @@ export default function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem asChild>
-                  <Link href="/products">{t('header.allProducts')}</Link>
+                  <Link href="/shop">{t('header.allProducts')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 {productCategories.map(cat => (
@@ -74,11 +79,24 @@ export default function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem asChild>
-                  <Link href="/profile/orders">My Orders</Link>
+                  <Link href="/account">My Account</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/orders">My Orders</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                 <DropdownMenuItem asChild>
+                  <Link href="/dashboard">
+                    <LayoutGrid className="mr-2 h-4 w-4"/>
+                    <span>Admin Dashboard</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                   <Link href="/login">Logout</Link>
+                   <Link href="/login">
+                      <LogOut className="mr-2 h-4 w-4"/>
+                      <span>Logout</span>
+                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

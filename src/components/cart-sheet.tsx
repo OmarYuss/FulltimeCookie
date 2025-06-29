@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useCart } from "@/context/cart-context"
+import { useCartStore } from "@/stores/cart-store"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -18,9 +18,12 @@ import { Separator } from "@/components/ui/separator"
 import { ShoppingCart, Trash2 } from "lucide-react"
 
 export function CartSheet() {
-  const { state, dispatch } = useCart()
-  const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0)
-  const subtotal = state.items.reduce(
+  const items = useCartStore((state) => state.items);
+  const removeItem = useCartStore((state) => state.removeItem);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
+  const subtotal = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   )
@@ -46,7 +49,7 @@ export function CartSheet() {
           <>
             <ScrollArea className="flex-1">
               <div className="flex flex-col gap-6 p-6">
-                {state.items.map((item) => (
+                {items.map((item) => (
                   <div key={item.id} className="flex items-start gap-4">
                     <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border">
                        <Image
@@ -68,9 +71,9 @@ export function CartSheet() {
                           min="1"
                           value={item.quantity}
                           className="h-8 w-16"
-                          onChange={(e) => dispatch({ type: 'UPDATE_QUANTITY', payload: { id: item.id, quantity: Number(e.target.value) }})}
+                          onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
                         />
-                        <Button variant="ghost" size="icon" onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.id })} aria-label={`Remove ${item.name}`}>
+                        <Button variant="ghost" size="icon" onClick={() => removeItem(item.id)} aria-label={`Remove ${item.name}`}>
                            <Trash2 className="h-4 w-4 text-muted-foreground" />
                         </Button>
                       </div>
