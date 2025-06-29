@@ -1,0 +1,160 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## CORE DEVELOPMENT PRINCIPLES
+1. **Type Safety First**
+   - Always use TypeScript interfaces for props/state
+   - Zero `any` types allowed - use `unknown` with type guards
+   - Validate all inputs with Zod schemas
+
+2. **Component Design Rules**
+   - Keep components under 200 lines
+   - Follow atomic design structure:
+        Atoms → Molecules → Organisms → Templates
+   - Always separate:
+        - Presentational components (UI only)
+        - Container components (logic/data)
+        - Hooks (business logic)
+
+3. **Performance Constraints**
+   - Memoize components with `React.memo`
+   - Debounce expensive operations (search/filters)
+   - Lazy load images with Next.js Image component
+   - Split chunks > 50KB
+
+
+4. **TODO lists**
+   - Always include a TODO list and refer to it before making changes.
+        
+   - Consequential thinking, always refer to your plan, keep in reference the initial plan, workflow and end goal.
+
+5. **Critique Workflow (Mandatory)**
+   Before accepting any solution:
+   1. Security Audit: "Identify potential XSS/SQLi vectors"
+   2. Performance Check: "Will this cause re-render issues?"
+   3. Accessibility Scan: "Verify WCAG 2.1 AA compliance"
+   4. Edge Case Test: "What happens when API returns 404?"
+
+6. **Fallback Procedure**
+   If solution fails:
+   ```prompt
+   /fix --strategy stepwise
+   /explain --detail technical
+   /ask "What alternative approaches exist?"
+
+## GIT WORKFLOW RULES
+
+7. **Branch Naming Convention**
+    feat/short-description   # New features
+    fix/bug-description      # Bug fixes
+    refactor/<component-name>          # Code improvements
+    chore/<task>                       # Maintenance tasks
+   
+8. **Commit Message Standards**
+    ## Format:
+    <type>(<scope>): <subject>
+    [Optional body]
+    Valid types:
+
+    feat: New functionality
+
+    fix: Bug resolution
+
+    docs: Documentation updates
+
+    style: Code formatting
+
+    refactor: Code restructuring
+
+    perf: Performance improvements
+
+    test: Test additions
+
+    chore: Maintenance tasks
+
+    ## EXAMPLE:
+    feat(checkout): add stripe payment integration
+
+    - Implemented Stripe Elements
+    - Added 3D Secure handling
+    - Created success/error flows
+
+9. **Commit Validation Rules**
+
+    No console.log in production code
+
+    Passing ESLint with strict rules:
+    "no-any": "error"
+    "react-hooks/exhaustive-deps": "warn"
+
+## PUSH STRATEGY
+
+10. **Pre-Push Checklist**
+
+    - Run tests: npm test
+
+    - Verify type safety: tsc --noEmit
+
+    - Check bundle size: npm run analyze
+
+    - Confirm no secrets in code
+
+11. **Logical Grouping Principle**
+
+    - 1 feature = 1 branch = 1-3 focused commits
+
+    - Never combine unrelated changes
+
+    - Atomic commits that can be cherry-picked
+
+12. **PR Creation Protocol**
+    
+    - Title format: [Area] Brief description
+
+    Template:
+
+## What's changed
+ - Point 1
+ - Point 2
+
+## Testing done
+- [ ] Test case 1
+- [ ] Test case 2
+
+## Security impact
+[Verification of security checks]
+
+## Performance data
+
+[Bundle size before/after]
+
+
+
+
+## PROJECT-SPECIFIC CONSTRAINTS
+13. **Bakery Domain Rules**
+
+- Always separate recipe/content CMS from products
+
+- Special orders require admin approval workflow
+
+- Never show out-of-stock items as purchasable
+
+14. **Strict Forbiddens**
+❌ No direct database access from frontend
+❌ No Firebase SDK in component layer
+❌ No inline styles except dynamic values
+❌ No generic component names (Button → PrimaryButton)
+
+15. **Performance Budget**
+
+- First Contentful Paint: < 1.5s
+
+- JS Bundle: < 150KB gzipped
+
+
+- API response: < 300ms
+
+
