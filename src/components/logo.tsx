@@ -1,7 +1,5 @@
 "use client";
 
-import Link from 'next/link';
-
 const CookieIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
@@ -26,13 +24,13 @@ const CookieIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2 group">
+    <>
       <div className="p-2 bg-primary rounded-lg text-primary-foreground group-hover:bg-primary/90 transition-colors">
         <CookieIcon className="w-6 h-6" />
       </div>
       <span className="text-2xl font-headline font-bold text-foreground">
         Fulltime Cookie
       </span>
-    </Link>
+    </>
   );
 }
