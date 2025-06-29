@@ -1,16 +1,4 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
-
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <Header />
-      <main className="flex-grow">{children}</main>
-      <Footer />
-    </div>
-  );
+// This layout is obsolete and has been replaced by /src/app/(public)/layout.tsx
+export default function ObsoleteLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
 }

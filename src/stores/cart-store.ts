@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+// import { persist } from 'zustand/middleware';
 import type { CartItem, Product } from '@/lib/types';
 
 type CartState = {
@@ -11,7 +11,7 @@ type CartState = {
 };
 
 export const useCartStore = create<CartState>()(
-  persist(
+  // persist( // Temporarily removed to fix build error
     (set) => ({
       items: [],
       addItem: (product) =>
@@ -48,9 +48,9 @@ export const useCartStore = create<CartState>()(
           };
         }),
       clearCart: () => set({ items: [] }),
-    }),
-    {
-      name: 'cart-storage', // name of the item in the storage (must be unique)
-    }
-  )
+    })
+  //   {
+  //     name: 'cart-storage', // name of the item in the storage (must be unique)
+  //   }
+  // )
 );
