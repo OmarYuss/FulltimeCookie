@@ -1,0 +1,33 @@
+{
+  "greeting": "שלום עולם!",
+  "footer": {
+    "copyright": "© 2024 פולטיים קוקי. כל הזכויות שמורות."
+  },
+  "nav": {
+    "shop": "חנות",
+    "recipes": "מתכונים",
+    "specialOrder": "הזמנה מיוחדת",
+    "account": "החשבון שלי",
+    "orders": "ההזמנות שלי"
+  },
+  "account": {
+    "myAccount": "החשבון שלי",
+    "profile": "פרופיל",
+    "orders": "הזמנות"
+  },
+  "actions": {
+    "logout": "התנתק"
+  },
+  "home": {
+    "heroTitle": "מאפים אומנותיים, ישר מהלב",
+    "heroSubtitle": "גלו מאפים, לחמים ועוגות בעבודת יד שנעשו באהבה ובמרכיבים הטובים ביותר.",
+    "shopAll": "קנו הכל",
+    "findRecipe": "מצאו מתכון"
+  },
+  "product": {
+    "addToCart": "הוסף לעגלה",
+    "quantity": "כמות",
+    "variations": "וריאציות",
+    "packageType": "סוג אריזה"
+  }
+} 

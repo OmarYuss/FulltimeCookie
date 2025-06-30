@@ -1,63 +1,70 @@
 "use client"
 
-import { useState } from "react"
+import * as React from "react"
 import Link from "next/link"
-import { Menu, LogIn } from "lucide-react"
-
+import { useTranslations } from "next-intl"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { Logo } from "./logo"
-import { useI18n } from "@/context/i18n-context"
 import { Separator } from "./ui/separator"
 
 type NavItem = {
-  name: string
   href: string
+  label: string
 }
 
-interface MobileNavProps {
-  navItems: NavItem[]
-}
+export function MobileNav() {
+  const [open, setOpen] = React.useState(false)
+  const t = useTranslations('nav')
 
-export function MobileNav({ navItems }: MobileNavProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const { t } = useI18n()
+  const navItems: NavItem[] = [
+    { href: "/shop", label: t('shop') },
+    { href: "/recipes", label: t('recipes') },
+    { href: "/special-order", label: t('specialOrder') },
+    { href: "/account", label: t('account') },
+    { href: "/orders", label: t('orders') },
+  ]
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" aria-label="Open navigation menu">
-          <Menu className="h-5 w-5" />
+        <Button
+          variant="ghost"
+          className="px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+        >
+          <Menu className="h-6 w-6" />
+          <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-        <div className="p-4 border-b">
-          <Link href="/" onClick={() => setIsOpen(false)}>
+      <SheetContent side="left" className="pr-0">
+        <div className="flex justify-between items-center mb-4 pr-6">
+          <Link
+            href="/"
+            className="flex items-center"
+            onClick={() => setOpen(false)}
+          >
             <Logo />
+            <span className="sr-only">Home</span>
           </Link>
-        </div>
-        <nav className="flex flex-col gap-1 p-4">
-          {navItems.map((item) => (
-            <SheetClose asChild key={item.href}>
-                <Link
-                href={item.href}
-                className="block px-3 py-2 text-lg font-medium rounded-md hover:bg-accent hover:text-accent-foreground"
-                >
-                {item.name}
-                </Link>
-            </SheetClose>
-          ))}
-          <Separator className="my-2" />
-          <SheetClose asChild>
-            <Link
-              href="/login"
-              className="flex items-center gap-2 px-3 py-2 text-lg font-medium rounded-md hover:bg-accent hover:text-accent-foreground"
-            >
-              <LogIn className="w-5 h-5" />
-              {t('header.login')}
-            </Link>
+          <SheetClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
           </SheetClose>
-        </nav>
+        </div>
+        <Separator className="mb-4" />
+        <div className="flex flex-col space-y-3 pr-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              className="text-lg font-medium"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </SheetContent>
     </Sheet>
   )

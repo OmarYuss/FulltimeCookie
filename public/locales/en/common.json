@@ -1,0 +1,33 @@
+{
+  "greeting": "Hello, World!",
+  "footer": {
+    "copyright": "© 2024 Fulltime Cookie. All rights reserved."
+  },
+  "nav": {
+    "shop": "Shop",
+    "recipes": "Recipes",
+    "specialOrder": "Special Order",
+    "account": "My Account",
+    "orders": "My Orders"
+  },
+  "account": {
+    "myAccount": "My Account",
+    "profile": "Profile",
+    "orders": "Orders"
+  },
+  "actions": {
+    "logout": "Log Out"
+  },
+  "home": {
+    "heroTitle": "Artisanal Bakes, Straight from the Heart",
+    "heroSubtitle": "Discover handcrafted pastries, breads, and cakes made with love and the finest ingredients.",
+    "shopAll": "Shop All Goodies",
+    "findRecipe": "Find a Recipe"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "variations": "Variations",
+    "packageType": "Package Type"
+  }
+} 

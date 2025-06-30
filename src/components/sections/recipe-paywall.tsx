@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import type { Recipe } from '@/lib/types';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { Lock } from 'lucide-react';
 import { useCartStore } from '@/stores/cart-store';
 import { useToast } from '@/hooks/use-toast';
@@ -26,7 +26,7 @@ export function RecipePaywall({ recipe }: RecipePaywallProps) {
         price: recipe.price,
         image: 'https://placehold.co/600x400.png',
         dataAiHint: 'recipe book',
-        category: 'Goods',
+        category: 'Goods' as const,
         tags: ['Recipe'],
         hasRecipe: false,
         details: {},

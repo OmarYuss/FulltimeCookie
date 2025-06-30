@@ -53,7 +53,7 @@ export function CartSheet() {
                   <div key={item.id} className="flex items-start gap-4">
                     <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border">
                        <Image
-                        src={item.image}
+                        src={item.images[0]}
                         alt={item.name}
                         fill
                         className="object-cover"

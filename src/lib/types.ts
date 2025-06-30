@@ -93,7 +93,7 @@ export type Order = {
   total: number;
 };
 
-export type SpecialOrderRequest = import('./schemas').SpecialOrderInput & {
+export type SpecialOrderRequest = import('./schemas/special-order').SpecialOrderInput & {
   id: string;
   status: OrderStatus;
 };

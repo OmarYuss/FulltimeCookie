@@ -5,14 +5,14 @@ import { Logo } from '@/components/logo'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { CartSheet } from '@/components/cart-sheet'
 import { MobileNav } from '@/components/mobile-nav'
-import { useI18n } from '@/context/i18n-context'
+import { useTranslations } from 'next-intl'
 import { LanguageSwitcher } from './language-switcher';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { ChevronDown, User, LogOut, LayoutGrid } from 'lucide-react';
 
 export default function Header() {
-  const { t } = useI18n();
+  const t = useTranslations();
   
   const productCategories = [
     { name: t('header.categories.cookies'), href: '/shop?tag=Cookies'},

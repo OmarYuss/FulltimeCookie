@@ -1,0 +1,51 @@
+/* RTL Overrides */
+[dir="rtl"] {
+  /* Layout and Text Direction */
+  .product-grid,
+  .product-details,
+  .order-summary,
+  .user-profile {
+    direction: rtl;
+    text-align: right;
+  }
+
+  /* Navigation and Menus */
+  .navigation-menu {
+    right: 0;
+    left: auto;
+  }
+
+  /* Forms and Inputs */
+  .form-group,
+  .input-group {
+    text-align: right;
+  }
+
+  /* Lists and Tables */
+  .list-items,
+  .table-content {
+    direction: rtl;
+  }
+
+  /* Margins and Paddings */
+  .ml-auto {
+    margin-left: unset !important;
+    margin-right: auto !important;
+  }
+
+  .mr-auto {
+    margin-right: unset !important;
+    margin-left: auto !important;
+  }
+
+  /* Borders */
+  .border-l {
+    border-left: unset !important;
+    border-right: 1px solid;
+  }
+
+  .border-r {
+    border-right: unset !important;
+    border-left: 1px solid;
+  }
+} 

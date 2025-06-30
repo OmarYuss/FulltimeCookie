@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Star, ChefHat } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { RecipePaywall } from '@/components/recipe-paywall';
+import { RecipePaywall } from '@/components/sections/recipe-paywall';
 import { Separator } from '@/components/ui/separator';
 
 export default function RecipePage({ params }: { params: { id: string } }) {

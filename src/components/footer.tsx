@@ -1,22 +1,15 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Logo } from "./logo";
-import { useI18n } from "@/context/i18n-context";
 
 export default function Footer() {
-  const { t } = useI18n();
+  const t = useTranslations('footer');
   return (
-    <footer className="border-t">
-      <div className="container py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <Logo />
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Fulltime Cookie. {t('footer.rights')}
-          </p>
-          <div className="flex items-center space-x-4">
-             {/* Add social links here if needed */}
-          </div>
-        </div>
+    <footer className="bg-muted py-8">
+      <div className="container flex flex-col md:flex-row items-center justify-between gap-4">
+        <Logo />
+        <p className="text-sm text-muted-foreground">{t('copyright')}</p>
       </div>
     </footer>
   );

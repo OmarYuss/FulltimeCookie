@@ -1,0 +1,33 @@
+{
+  "greeting": "مرحباً بالعالم!",
+  "footer": {
+    "copyright": "© 2024 فولتايم كوكي. كل الحقوق محفوظة."
+  },
+  "nav": {
+    "shop": "المتجر",
+    "recipes": "الوصفات",
+    "specialOrder": "طلب خاص",
+    "account": "حسابي",
+    "orders": "طلباتي"
+  },
+  "account": {
+    "myAccount": "حسابي",
+    "profile": "الملف الشخصي",
+    "orders": "الطلبات"
+  },
+  "actions": {
+    "logout": "تسجيل الخروج"
+  },
+  "home": {
+    "heroTitle": "مخبوزات فنية من القلب",
+    "heroSubtitle": "اكتشف المعجنات والخبز والكعك المصنوع يدويًا بالحب وأجود المكونات.",
+    "shopAll": "تسوق كل المنتجات",
+    "findRecipe": "ابحث عن وصفة"
+  },
+  "product": {
+    "addToCart": "أضف إلى السلة",
+    "quantity": "الكمية",
+    "variations": "الأنواع",
+    "packageType": "نوع الحزمة"
+  }
+} 

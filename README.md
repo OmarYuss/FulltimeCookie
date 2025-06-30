@@ -22,10 +22,28 @@ Welcome to Fulltime Cookie, a modern, feature-rich e-commerce application for a 
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)
-- **AI Integration**: [Genkit](https://firebase.google.com/docs/genkit)
 - **Icons**: [Lucide React](https://lucide.dev/)
 
 ## 📂 Project Structure
+
+The application follows a clean, organized structure:
+
+```
+src/
+├── components/          # Shared UI components
+│   ├── ui/             # Shadcn UI components
+│   └── sections/       # Page-specific sections
+├── lib/                # Utilities and services
+│   ├── auth/           # Authentication service
+│   ├── api/            # API client
+│   └── utils/          # Helper functions
+├── stores/             # Zustand state management
+├── app/                # Next.js app router
+│   ├── (public)/       # Public routes
+│   ├── (protected)/    # Protected routes
+│   └── (admin)/        # Admin routes
+└── styles/             # Global styles
+```
 
 The application uses Next.js Route Groups to organize routes based on their access level:
 

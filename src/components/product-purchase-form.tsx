@@ -1,43 +1,57 @@
 "use client"
 
-import type { Product } from "@/lib/types";
-import { useState, useMemo } from "react";
-import { useI18n } from "@/context/i18n-context";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import { Label } from "./ui/label";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { useCartStore } from "@/stores/cart-store";
-import { Badge } from "./ui/badge";
-import Link from "next/link";
-import { Input } from "./ui/input";
+import { useState } from "react"
+import Link from "next/link"
+import type { Product, ProductVariation, ProductPackageType } from "@/lib/types"
+import { useCartStore } from "@/stores/cart-store"
+import { useToast } from "@/hooks/use-toast"
+import { useLocale, useTranslations } from "next-intl"
+import { formatPrice } from "@/lib/i18n-formatters"
 
-export function ProductPurchaseForm({ product }: { product: Product }) {
-  const { t } = useI18n();
-  const addItem = useCartStore((state) => state.addItem);
-  const [quantity, setQuantity] = useState(1);
-  const [selectedVariationId, setSelectedVariationId] = useState<string | undefined>(product.variations?.[0]?.id);
-  const [selectedPackageId, setSelectedPackageId] = useState<string | undefined>(product.packageTypes?.[0]?.id);
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Separator } from "@/components/ui/separator"
 
-  const selectedVariation = useMemo(() => {
-    return product.variations?.find(v => v.id === selectedVariationId);
-  }, [product.variations, selectedVariationId]);
+interface ProductPurchaseFormProps {
+  product: Product
+}
 
-  const selectedPackage = useMemo(() => {
-    return product.packageTypes?.find(p => p.id === selectedPackageId);
-  }, [product.packageTypes, selectedPackageId]);
+export function ProductPurchaseForm({ product }: ProductPurchaseFormProps) {
+  const [quantity, setQuantity] = useState(1)
+  const [selectedVariation, setSelectedVariation] = useState<ProductVariation | null>(product.variations?.[0] ?? null)
+  const [selectedPackageType, setSelectedPackageType] = useState<ProductPackageType | null>(product.packageTypes?.[0] ?? null)
+  const { toast } = useToast()
+  const addItemToCart = useCartStore((state) => state.addItem)
+  const locale = useLocale()
+  const t = useTranslations('product');
 
-  const totalPrice = useMemo(() => {
-    const basePrice = product.price;
-    const variationPrice = selectedVariation?.priceModifier || 0;
-    const packagePrice = selectedPackage?.price || 0;
-    return (basePrice + variationPrice + packagePrice) * quantity;
-  }, [product.price, selectedVariation, selectedPackage, quantity]);
+  const finalPrice = (product.price + (selectedVariation?.priceModifier || 0) + (selectedPackageType?.price || 0)) * quantity;
 
   const handleAddToCart = () => {
-    // A real implementation would pass variation/package details to the cart
-    const itemToAdd = { ...product, price: totalPrice / quantity, quantity };
-    addItem(itemToAdd);
+    let itemToAdd = { ...product, quantity };
+
+    if (selectedVariation) {
+        itemToAdd.name = `${product.name} - ${selectedVariation.name}`;
+    }
+
+    if (selectedPackageType) {
+        itemToAdd.name = `${itemToAdd.name} (${selectedPackageType.name})`;
+    }
+
+    addItemToCart(itemToAdd);
+    toast({
+      title: `${itemToAdd.name} added to cart`,
+      description: `Price: ${formatPrice(finalPrice, locale)}`,
+    });
   }
 
   return (
@@ -47,66 +61,86 @@ export function ProductPurchaseForm({ product }: { product: Product }) {
         <p className="mt-4 text-lg text-muted-foreground">{product.description}</p>
       </div>
       
-      <div className="text-4xl font-bold text-primary">₪{totalPrice.toFixed(2)}</div>
+      <div className="text-4xl font-bold text-primary">₪{finalPrice.toFixed(2)}</div>
 
       <Separator />
 
-      {product.variations && product.variations.length > 0 && (
-        <div className="grid gap-3">
-          <Label className="text-lg font-headline">{t('productPage.variations')}</Label>
-          <RadioGroup value={selectedVariationId} onValueChange={setSelectedVariationId}>
-            {product.variations.map(variation => (
-              <div key={variation.id} className="flex items-center justify-between">
-                <Label htmlFor={variation.id} className="flex items-center gap-3 cursor-pointer">
-                  <RadioGroupItem value={variation.id} id={variation.id} disabled={!variation.inStock} />
-                  {variation.name} {variation.priceModifier > 0 && `(+₪${variation.priceModifier.toFixed(2)})`}
-                </Label>
-                {!variation.inStock && <Badge variant="destructive">{t('productPage.outOfStock')}</Badge>}
+      {product.variations && (
+        <div className="grid gap-2">
+          <Label className="text-lg font-semibold">{t('variations')}</Label>
+          <RadioGroup
+            value={selectedVariation?.id}
+            onValueChange={(id) => setSelectedVariation(product.variations?.find(v => v.id === id) || null)}
+          >
+            {product.variations.map((variation) => (
+              <div key={variation.id} className="flex items-center space-x-2">
+                <RadioGroupItem value={variation.id} id={variation.id} />
+                <Label htmlFor={variation.id} className="flex-grow">{variation.name}</Label>
+                <span className="text-sm text-muted-foreground">
+                  +{formatPrice(variation.priceModifier, locale)}
+                </span>
               </div>
             ))}
           </RadioGroup>
         </div>
       )}
 
-      {product.packageTypes && product.packageTypes.length > 0 && (
-        <div className="grid gap-3">
-          <Label className="text-lg font-headline">{t('productPage.packageType')}</Label>
-          <RadioGroup value={selectedPackageId} onValueChange={setSelectedPackageId}>
-            {product.packageTypes.map(pkg => (
-              <div key={pkg.id} className="flex items-center">
-                <RadioGroupItem value={pkg.id} id={pkg.id} />
-                <Label htmlFor={pkg.id} className="ml-3 font-normal cursor-pointer">
-                  {pkg.name} {pkg.price > 0 && `(+₪${pkg.price.toFixed(2)})`}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
+      {product.packageTypes && (
+        <div className="grid gap-2">
+           <Label htmlFor="package-type" className="text-lg font-semibold">{t('packageType')}</Label>
+            <Select 
+                value={selectedPackageType?.id}
+                onValueChange={(id) => setSelectedPackageType(product.packageTypes?.find(p => p.id === id) || null)}
+            >
+                <SelectTrigger id="package-type">
+                    <SelectValue placeholder="Select a package type" />
+                </SelectTrigger>
+                <SelectContent>
+                    {product.packageTypes.map((pack) => (
+                        <SelectItem key={pack.id} value={pack.id}>
+                            {pack.name} (+{formatPrice(pack.price, locale)})
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
         </div>
       )}
 
-      <div className="flex items-center gap-4">
-        <Input 
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label htmlFor="quantity" className="text-lg font-semibold">{t('quantity')}</Label>
+        <Input
+          id="quantity"
           type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-          className="w-20"
           min="1"
+          value={quantity}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          className="w-24"
         />
-        <Button size="lg" onClick={handleAddToCart} className="w-full">{t('productPage.addToCart')}</Button>
+      </div>
+      
+      <Separator />
+
+      <div className="flex flex-col gap-2">
+        <p className="text-2xl font-bold text-right">
+          {formatPrice(finalPrice, locale)}
+        </p>
+        <Button onClick={handleAddToCart} size="lg">
+          {t('addToCart')}
+        </Button>
       </div>
       
       <Separator />
 
       <div className="space-y-4 text-sm">
-        <h4 className="font-headline text-lg">{t('productPage.details')}</h4>
-        {product.details.pricePer && <p><strong>{t('productPage.pricePer')}:</strong> {product.details.pricePer}</p>}
-        {product.details.prepTime && <p><strong>{t('productPage.prepTime')}:</strong> {product.details.prepTime}</p>}
-        {product.details.contains && <p><strong>{t('productPage.contains')}:</strong> {product.details.contains}</p>}
+        <h4 className="font-headline text-lg">{t('details')}</h4>
+        {product.details.pricePer && <p><strong>{t('pricePer')}:</strong> {product.details.pricePer}</p>}
+        {product.details.prepTime && <p><strong>{t('prepTime')}:</strong> {product.details.prepTime}</p>}
+        {product.details.contains && <p><strong>{t('contains')}:</strong> {product.details.contains}</p>}
       </div>
 
       {product.hasRecipe && product.recipeId && (
         <Button variant="outline" asChild>
-          <Link href={`/recipes/${product.recipeId}`}>{t('productPage.viewRecipe')}</Link>
+          <Link href={`/recipes/${product.recipeId}`}>{t('viewRecipe')}</Link>
         </Button>
       )}
     </div>

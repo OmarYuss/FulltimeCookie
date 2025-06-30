@@ -9,6 +9,20 @@ alwaysApply: false
    - Zero `any` types allowed - use `unknown` with type guards
    - Validate all inputs with Zod schemas
 
+   // Zero 'any' policy
+interface Product {
+  id: string;
+  name: string;
+  price: number; // Always in USD
+}
+
+// API validation
+const ProductSchema = z.object({
+  name: z.string().min(2),
+  price: z.number().positive()
+});
+
+
 2. **Component Design Rules**
    - Keep components under 200 lines
    - Follow atomic design structure:
@@ -51,6 +65,7 @@ alwaysApply: false
     fix/bug-description      # Bug fixes
     refactor/<component-name>          # Code improvements
     chore/<task>                       # Maintenance tasks
+    i18n/<locale>/<feature>    # Translation work
    
 8. **Commit Message Standards**
     ## Format:
@@ -73,6 +88,8 @@ alwaysApply: false
     test: Test additions
 
     chore: Maintenance tasks
+
+    i18n: Translations implemntations
 
     ## EXAMPLE:
     feat(checkout): add stripe payment integration
@@ -147,6 +164,10 @@ alwaysApply: false
 ❌ No Firebase SDK in component layer
 ❌ No inline styles except dynamic values
 ❌ No generic component names (Button → PrimaryButton)
+❌ Hardcoded text in components
+❌ Fixed-direction CSS (left/right)
+❌ Locale-specific formatting without hooks
+❌ Mixing translation keys across features
 
 15. **Performance Budget**
 
@@ -157,4 +178,113 @@ alwaysApply: false
 
 - API response: < 300ms
 
+16. **I18N AGENT RULES**
 
+## CORE PRINCIPLES
+    graph TD
+
+  A[Locale Detection] --> B[Content Abstraction]
+  B --> C[RTL Adaptation]
+  C --> D[Formatting]
+  D --> E[Fallbacks]
+
+## Implementation rules
+
+17. **File Structure Enforcement**
+
+public/locales/
+├── en/
+│   ├── common.json
+│   ├── product.json
+│   └── checkout.json
+├── ar/ # Arabic (RTL)
+│   ├── common.json
+│   └── ...
+└── he/ # Hebrew (RTL)
+    ├── common.json
+    └── ...
+
+18. **Component Development Rules**
+
+##Example:
+
+// components/ProductCard.tsx
+import {useTranslations} from 'next-intl';
+
+export default function ProductCard() {
+  const t = useTranslations('Product');
+  return <h3>{t('price')}</h3>; // Never hardcode text
+}
+
+19. **RTL Requirements**
+
+// providers/DirectionProvider.tsx
+export default function DirectionProvider({children}) {
+  const locale = useLocale();
+  const dir = ['ar', 'he'].includes(locale) ? 'rtl' : 'ltr';
+  return <div dir={dir} lang={locale}>{children}</div>;
+}
+
+20. **Formatting Protocol**
+
+// Number formatting
+new Intl.NumberFormat(locale).format(price)
+
+// Date formatting
+new Intl.DateTimeFormat(locale, {dateStyle: 'long'}).format(orderDate)
+
+21. **Fallback Strategy**
+
+function t(key: string, locale: string) {
+  return translations[locale][key] 
+    ?? translations['en'][key] 
+    ?? `[MISSING: ${key}]`;
+}
+
+22. **Branch Naming**
+
+`i18n/ar/checkout-flow`
+
+## Commit Message Example
+i18n[he]: add recipe page translations
+
+• Implemented RTL form layouts
+• Added Hebrew measurement units
+• Fixed calendar display formatting
+
+23. **File/folder Naming**
+
+Illegal Filename Characters
+Do not use any of these common illegal characters or symbols in your filenames or folders:
+
+"#" pound
+"%" percent
+"&" ampersand
+"{" left curly bracket
+"}" right curly bracket
+"\" back slash
+"<" left angle bracket
+">" right angle bracket
+"*" asterisk
+"?" question mark
+"/" forward slash
+" " blank spaces
+"$" dollar sign
+"!" exclamation point
+"'" single quotes
+""" double quotes
+":" colon
+"@" at sign
+"+" plus sign
+"`" backtick
+"|" pipe
+"=" equal sign
+emojis
+alt codes
+In addition to forbidden characters, keep these rules in mind when choosing a folder name or filename:
+
+Don't start or end your filename with a space, period, hyphen, or underline.
+Keep your filenames to a reasonable length and be sure they are under 31 characters.
+Most operating systems are case sensitive; always use lowercase.
+Avoid using spaces and underscores; use a hyphen instead. This will also improve your search engine rankings.
+Non-ASCII characters need to be escaped.

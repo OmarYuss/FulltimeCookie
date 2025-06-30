@@ -1,17 +1,17 @@
 "use client";
 
-import { useI18n } from '@/context/i18n-context';
+import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
 
 export function AnimatedHeroSection({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const { t } = useI18n();
+  const t = useTranslations('home');
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -73,23 +73,23 @@ export function AnimatedHeroSection({
           className="text-5xl md:text-7xl font-headline font-black text-white drop-shadow-lg"
           variants={itemVariants}
         >
-          {t('home.heroTitle')}
+          {t('heroTitle')}
         </motion.h1>
         <motion.p 
           className="mt-4 max-w-2xl text-lg md:text-xl text-white/90 drop-shadow-md"
           variants={itemVariants}
         >
-          {t('home.heroSubtitle')}
+          {t('heroSubtitle')}
         </motion.p>
         <motion.div 
           className="mt-8 flex flex-wrap gap-4 justify-center"
           variants={itemVariants}
         >
           <Button asChild size="lg" className="font-bold">
-            <Link href="/shop">{t('home.shopAll')}</Link>
+            <Link href="/shop">{t('shopAll')}</Link>
           </Button>
           <Button asChild size="lg" variant="secondary">
-            <Link href="/recipes">{t('home.findRecipe')}</Link>
+            <Link href="/recipes">{t('findRecipe')}</Link>
           </Button>
         </motion.div>
       </motion.div>

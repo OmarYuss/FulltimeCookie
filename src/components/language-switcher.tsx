@@ -1,37 +1,38 @@
 "use client";
 
-import { useI18n } from '@/context/i18n-context';
-import { Button } from "@/components/ui/button";
+import { useLocale } from 'next-intl';
+import { useRouter, usePathname } from 'next/navigation';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Globe } from 'lucide-react';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Languages } from "lucide-react";
 
 export function LanguageSwitcher() {
-  const { setLanguage } = useI18n();
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
+
+  const onSelectChange = (nextLocale: string) => {
+    // The pathname will be like `/en/about`, so we need to replace the current locale
+    const newPath = pathname.replace(`/${locale}`, `/${nextLocale}`);
+    router.replace(newPath);
+  };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" aria-label="Change language">
-          <Globe className="h-[1.2rem] w-[1.2rem]" />
-          <span className="sr-only">Change language</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setLanguage('en')}>
-          English
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage('he')}>
-          עברית
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage('ar')}>
-          العربية
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Select onValueChange={onSelectChange} defaultValue={locale}>
+      <SelectTrigger className="w-[120px]">
+        <Languages className="h-4 w-4 mr-2" />
+        <SelectValue placeholder="Language" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="en">English</SelectItem>
+        <SelectItem value="he">עברית</SelectItem>
+        <SelectItem value="ar">العربية</SelectItem>
+      </SelectContent>
+    </Select>
   );
 }

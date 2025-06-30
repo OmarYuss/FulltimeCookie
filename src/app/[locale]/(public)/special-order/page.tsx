@@ -1,7 +1,7 @@
 "use client";
 
 import { useI18n } from "@/context/i18n-context";
-import { SpecialOrderWizard } from "@/components/special-order-wizard";
+import { SpecialOrderWizard } from "@/components/sections/special-order-wizard";
 
 export default function SpecialOrderPage() {
   const { t } = useI18n();
