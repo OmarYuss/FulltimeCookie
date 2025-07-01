@@ -4,13 +4,15 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useTranslations } from 'next-intl';
 
 function RecipeCard({ recipe }: { recipe: import('@/lib/types').Recipe }) {
+  const t = useTranslations('recipes');
   return (
     <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
       <CardHeader>
         {recipe.isPaid && (
-          <Badge variant="secondary" className="absolute top-4 right-4">Premium</Badge>
+          <Badge variant="secondary" className="absolute top-4 right-4">{t('premium')}</Badge>
         )}
         <CardTitle className="font-headline text-2xl">{recipe.name}</CardTitle>
         <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
@@ -19,7 +21,7 @@ function RecipeCard({ recipe }: { recipe: import('@/lib/types').Recipe }) {
                     <Star key={i} className={`h-4 w-4 ${i < Math.round(recipe.rating) ? 'text-primary fill-primary' : 'text-muted'}`} />
                 ))}
             </div>
-            <span>({recipe.reviews} reviews)</span>
+            <span>({recipe.reviews} {t('reviews')})</span>
         </div>
       </CardHeader>
       <CardContent className="flex-grow">
@@ -28,7 +30,7 @@ function RecipeCard({ recipe }: { recipe: import('@/lib/types').Recipe }) {
       <CardFooter>
         <Button asChild className="w-full">
             <Link href={`/recipes/${recipe.id}`}>
-                {recipe.isPaid ? `Unlock for ₪${recipe.price.toFixed(2)}` : 'View Recipe'}
+                {recipe.isPaid ? t('unlockFor', { price: recipe.price.toFixed(2) }) : t('viewRecipe')}
                 <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
         </Button>
@@ -38,12 +40,13 @@ function RecipeCard({ recipe }: { recipe: import('@/lib/types').Recipe }) {
 }
 
 export default function RecipesPage() {
+  const t = useTranslations('recipes');
   return (
     <div className="container py-12 md:py-16">
       <div className="text-center mb-12">
-        <h1 className="text-5xl md:text-6xl font-headline font-bold">Our Recipes</h1>
+        <h1 className="text-5xl md:text-6xl font-headline font-bold">{t('ourRecipes')}</h1>
         <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
-          From our kitchen to yours. Find your next baking adventure with our collection of tried-and-true recipes.
+          {t('subtitle')}
         </p>
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

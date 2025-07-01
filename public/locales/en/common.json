@@ -28,6 +28,96 @@
     "addToCart": "Add to Cart",
     "quantity": "Quantity",
     "variations": "Variations",
-    "packageType": "Package Type"
+    "packageType": "Package Type",
+    "title": "Our Products",
+    "description": "Delicious, handcrafted cookies and cakes."
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Login"
+  },
+  "close": "Close",
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "recipe": {
+    "instructions": "Instructions",
+    "unlockTitle": "Unlock the Full Recipe",
+    "unlockDescription": "Get instant access to all steps, tips, and tricks from our expert bakers.",
+    "unlockFor": "Unlock for ₪{price}"
+  },
+  "specialOrder": {
+    "basics": "The Basics",
+    "type": "Type",
+    "typePlaceholder": "Select a type",
+    "cake": "Cake",
+    "cookies": "Cookies",
+    "otherBakedGoods": "Other Baked Goods",
+    "contains": "Contains",
+    "containsPlaceholder": "What should it contain?",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe your order",
+    "detailsAndInspiration": "Details & Inspiration",
+    "requestedDueDate": "Requested Due Date (Optional)",
+    "pickADate": "Pick a date",
+    "inspiration": "Inspiration",
+    "inspirationLink": "Paste a link to inspiration",
+    "or": "OR",
+    "fileUploadsNotSupported": "File uploads are not yet supported. Please use a link for now.",
+    "readyToSubmit": "Ready to Submit?",
+    "clickToSend": "Click the button below to send your request for review. We'll get back to you soon!",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit"
+  },
+  "toggleMenu": "Toggle Menu",
+  "header": {
+    "logout": "Logout"
+  },
+  "cart": {
+    "openCart": "Open shopping cart",
+    "cartTitle": "Cart ({count})",
+    "removeItem": "Remove {name}",
+    "subtotal": "Subtotal",
+    "shippingNote": "Shipping and taxes calculated at checkout.",
+    "checkout": "Checkout",
+    "emptyTitle": "Your cart is empty",
+    "emptyDescription": "Add some delicious treats to get started!"
+  },
+  "orders": {
+    "myOrders": "My Orders",
+    "viewAndSort": "View and sort your past and current orders.",
+    "orderId": "Order ID",
+    "date": "Date",
+    "summary": "Summary",
+    "total": "Total",
+    "status": "Status",
+    "noOrders": "You have no orders yet."
+  },
+  "recipes": {
+    "premium": "Premium",
+    "reviews": "reviews",
+    "unlockFor": "Unlock for ₪{price}",
+    "viewRecipe": "View Recipe",
+    "ourRecipes": "Our Recipes",
+    "subtitle": "From our kitchen to yours. Find your next baking adventure with our collection of tried-and-true recipes."
+  },
+  "signup": {
+    "title": "Sign Up",
+    "description": "Enter your information to create an account",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "John Doe",
+    "email": "Email",
+    "emailPlaceholder": "m@example.com",
+    "password": "Password",
+    "createAccount": "Create an account",
+    "orSignUpWith": "Or sign up with",
+    "signUpWithPhone": "Sign up with Phone",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login"
   }
 } 

@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { useI18n } from "@/context/i18n-context";
+import { useTranslations } from 'next-intl';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -35,7 +35,7 @@ const specialOrderSchema = z.object({
 type SpecialOrderFormValues = z.infer<typeof specialOrderSchema>;
 
 export function SpecialOrderWizard() {
-  const { t } = useI18n();
+  const t = useTranslations('specialOrder');
   const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,16 +60,16 @@ export function SpecialOrderWizard() {
       } else {
         toast({
           variant: "destructive",
-          title: t('specialOrder.errorTitle'),
-          description: result.message || t('specialOrder.errorDescription'),
+          title: t('errorTitle'),
+          description: result.message || t('errorDescription'),
         });
       }
     } catch (error) {
       console.error("Special order submission error:", error);
       toast({
         variant: "destructive",
-        title: t('specialOrder.errorTitle'),
-        description: t('specialOrder.errorDescription'),
+        title: t('errorTitle'),
+        description: t('errorDescription'),
       });
     } finally {
       setIsLoading(false);
@@ -94,11 +94,11 @@ export function SpecialOrderWizard() {
       <Card className="w-full">
         <CardHeader className="text-center">
           <PartyPopper className="w-16 h-16 mx-auto text-primary" />
-          <CardTitle className="text-2xl mt-4">{t('specialOrder.successTitle')}</CardTitle>
-          <CardDescription>{t('specialOrder.successDescription')}</CardDescription>
+          <CardTitle className="text-2xl mt-4">{t('successTitle')}</CardTitle>
+          <CardDescription>{t('successDescription')}</CardDescription>
         </CardHeader>
         <CardContent className="text-center">
-            <Button onClick={() => { form.reset(); setStep(1); setIsFinished(false); }}>Create Another Order</Button>
+            <Button onClick={() => { form.reset(); setStep(1); setIsFinished(false); }}>{t('createAnotherOrder')}</Button>
         </CardContent>
       </Card>
     );
@@ -119,16 +119,16 @@ export function SpecialOrderWizard() {
             >
               {step === 1 && (
                 <div className="space-y-6">
-                  <h3 className="text-2xl font-headline font-semibold">The Basics</h3>
+                  <h3 className="text-2xl font-headline font-semibold">{t('basics')}</h3>
                   <FormField control={form.control} name="type" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('specialOrder.type')}</FormLabel>
+                      <FormLabel>{t('type')}</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl><SelectTrigger><SelectValue placeholder={t('specialOrder.typePlaceholder')} /></SelectTrigger></FormControl>
+                        <FormControl><SelectTrigger><SelectValue placeholder={t('typePlaceholder')} /></SelectTrigger></FormControl>
                         <SelectContent>
-                          <SelectItem value="Cake">Cake</SelectItem>
-                          <SelectItem value="Cookies">Cookies</SelectItem>
-                          <SelectItem value="Baked Goods">Other Baked Goods</SelectItem>
+                          <SelectItem value="Cake">{t('cake')}</SelectItem>
+                          <SelectItem value="Cookies">{t('cookies')}</SelectItem>
+                          <SelectItem value="Baked Goods">{t('otherBakedGoods')}</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -136,15 +136,15 @@ export function SpecialOrderWizard() {
                   )} />
                   <FormField control={form.control} name="contains" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('specialOrder.contains')}</FormLabel>
-                      <FormControl><Input placeholder={t('specialOrder.containsPlaceholder')} {...field} /></FormControl>
+                      <FormLabel>{t('contains')}</FormLabel>
+                      <FormControl><Input placeholder={t('containsPlaceholder')} {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="description" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('specialOrder.description')}</FormLabel>
-                      <FormControl><Textarea placeholder={t('specialOrder.descriptionPlaceholder')} rows={6} {...field} /></FormControl>
+                      <FormLabel>{t('description')}</FormLabel>
+                      <FormControl><Textarea placeholder={t('descriptionPlaceholder')} rows={6} {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
@@ -152,17 +152,14 @@ export function SpecialOrderWizard() {
               )}
               {step === 2 && (
                 <div className="space-y-6">
-                   <h3 className="text-2xl font-headline font-semibold">Details & Inspiration</h3>
+                   <h3 className="text-2xl font-headline font-semibold">{t('detailsAndInspiration')}</h3>
                     <FormField control={form.control} name="dueDate" render={({ field }) => (
                         <FormItem className="flex flex-col">
-                            <FormLabel>Requested Due Date (Optional)</FormLabel>
+                            <FormLabel>{t('requestedDueDate')}</FormLabel>
                             <Popover>
                                 <PopoverTrigger asChild>
                                     <FormControl>
-                                        <Button variant="outline" className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
-                                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                        </Button>
+                                        <Button variant="outline" className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}> {field.value ? format(field.value, "PPP") : <span>{t('pickADate')}</span>} <CalendarIcon className="ml-auto h-4 w-4 opacity-50" /> </Button>
                                     </FormControl>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-auto p-0" align="start">
@@ -173,39 +170,39 @@ export function SpecialOrderWizard() {
                         </FormItem>
                     )} />
                     <div>
-                        <FormLabel>{t('specialOrder.inspiration')}</FormLabel>
+                        <FormLabel>{t('inspiration')}</FormLabel>
                         <FormField control={form.control} name="inspirationLink" render={({ field }) => (
                         <FormItem>
-                            <FormControl><Input placeholder={t('specialOrder.inspirationLink')} {...field} /></FormControl>
+                            <FormControl><Input placeholder={t('inspirationLink')} {...field} /></FormControl>
                             <FormMessage />
                         </FormItem>
                         )} />
                         <div className="relative flex items-center my-4">
                             <div className="flex-grow border-t border-muted-foreground"></div>
-                            <span className="flex-shrink mx-4 text-muted-foreground text-sm">OR</span>
+                            <span className="flex-shrink mx-4 text-muted-foreground text-sm">{t('or')}</span>
                             <div className="flex-grow border-t border-muted-foreground"></div>
                         </div>
                         <Input type="file" disabled />
-                        <p className="text-xs text-muted-foreground mt-2">File uploads are not yet supported. Please use a link for now.</p>
+                        <p className="text-xs text-muted-foreground mt-2">{t('fileUploadsNotSupported')}</p>
                     </div>
                 </div>
               )}
               {step === 3 && (
                 <div className="text-center space-y-4">
                   <CheckCircle className="w-16 h-16 mx-auto text-green-500" />
-                  <h3 className="text-2xl font-headline font-semibold">Ready to Submit?</h3>
-                  <p className="text-muted-foreground">Click the button below to send your request for review. We'll get back to you soon!</p>
+                  <h3 className="text-2xl font-headline font-semibold">{t('readyToSubmit')}</h3>
+                  <p className="text-muted-foreground">{t('clickToSend')}</p>
                 </div>
               )}
             </motion.div>
           </AnimatePresence>
           <div className="flex justify-between mt-8 pt-4 border-t">
-            <Button type="button" variant="outline" onClick={prevStep} disabled={step === 1}>Back</Button>
-            {step < TOTAL_STEPS && <Button type="button" onClick={nextStep}>Next</Button>}
+            <Button type="button" variant="outline" onClick={prevStep} disabled={step === 1}>{t('back')}</Button>
+            {step < TOTAL_STEPS && <Button type="button" onClick={nextStep}>{t('next')}</Button>}
             {step === TOTAL_STEPS && (
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {t('specialOrder.submit')}
+                {t('submit')}
               </Button>
             )}
           </div>

@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, KeyRound, User, Phone } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -26,39 +27,40 @@ const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function SignupPage() {
+  const t = useTranslations('signup');
   return (
     <Card className="mx-auto max-w-sm w-full">
       <CardHeader>
-        <CardTitle className="text-xl">Sign Up</CardTitle>
+        <CardTitle className="text-xl">{t('title')}</CardTitle>
         <CardDescription>
-          Enter your information to create an account
+          {t('description')}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="full-name">Full name</Label>
+            <Label htmlFor="full-name">{t('fullName')}</Label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input id="full-name" placeholder="John Doe" required className="pl-10" />
+              <Input id="full-name" placeholder={t('fullNamePlaceholder')} required className="pl-10" />
             </div>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('email')}</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input id="email" type="email" placeholder="m@example.com" required className="pl-10" />
+              <Input id="email" type="email" placeholder={t('emailPlaceholder')} required className="pl-10" />
             </div>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('password')}</Label>
             <div className="relative">
               <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input id="password" type="password" required className="pl-10" />
             </div>
           </div>
           <Button type="submit" className="w-full">
-            Create an account
+            {t('createAccount')}
           </Button>
            <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -66,7 +68,7 @@ export default function SignupPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Or sign up with
+                {t('orSignUpWith')}
               </span>
             </div>
           </div>
@@ -82,13 +84,13 @@ export default function SignupPage() {
           </div>
            <Button variant="outline" className="w-full">
             <Phone className="mr-2 h-4 w-4" />
-            Sign up with Phone
+            {t('signUpWithPhone')}
           </Button>
         </div>
         <div className="mt-4 text-center text-sm">
-          Already have an account?{" "}
+          {t('alreadyHaveAccount')}{' '}
           <Link href="/login" className="underline">
-            Login
+            {t('login')}
           </Link>
         </div>
       </CardContent>

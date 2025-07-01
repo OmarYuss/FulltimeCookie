@@ -20,14 +20,104 @@
   },
   "home": {
     "heroTitle": "מאפים אומנותיים, ישר מהלב",
-    "heroSubtitle": "גלו מאפים, לחמים ועוגות בעבודת יד שנעשו באהבה ובמרכיבים הטובים ביותר.",
-    "shopAll": "קנו הכל",
-    "findRecipe": "מצאו מתכון"
+    "heroSubtitle": "גלה מאפים, לחמים ועוגות בעבודת יד עם אהבה והמרכיבים הטובים ביותר.",
+    "shopAll": "קנה הכל",
+    "findRecipe": "מצא מתכון"
   },
   "product": {
     "addToCart": "הוסף לעגלה",
     "quantity": "כמות",
     "variations": "וריאציות",
-    "packageType": "סוג אריזה"
+    "packageType": "סוג אריזה",
+    "title": "המוצרים שלנו",
+    "description": "עוגיות ועוגות בעבודת יד טעימות."
+  },
+  "login": {
+    "title": "התחברות",
+    "email": "אימייל",
+    "password": "סיסמה",
+    "submit": "התחברות"
+  },
+  "close": "סגור",
+  "theme": {
+    "light": "בהיר",
+    "dark": "כהה",
+    "system": "מערכת"
+  },
+  "recipe": {
+    "instructions": "הוראות",
+    "unlockTitle": "פתח את כל המתכון",
+    "unlockDescription": "קבל גישה מיידית לכל השלבים, הטיפים והטריקים מהאופים שלנו.",
+    "unlockFor": "פתח עבור ₪{price}"
+  },
+  "specialOrder": {
+    "basics": "הבסיס",
+    "type": "סוג",
+    "typePlaceholder": "בחר סוג",
+    "cake": "עוגה",
+    "cookies": "עוגיות",
+    "otherBakedGoods": "מאפים אחרים",
+    "contains": "תכולה",
+    "containsPlaceholder": "מה צריך להיות בפנים?",
+    "description": "תיאור",
+    "descriptionPlaceholder": "תאר את ההזמנה שלך",
+    "detailsAndInspiration": "פרטים והשראה",
+    "requestedDueDate": "תאריך יעד מבוקש (אופציונלי)",
+    "pickADate": "בחר תאריך",
+    "inspiration": "השראה",
+    "inspirationLink": "הדבק קישור להשראה",
+    "or": "או",
+    "fileUploadsNotSupported": "העלאת קבצים אינה נתמכת עדיין. נא להשתמש בקישור לעת עתה.",
+    "readyToSubmit": "מוכן לשליחה?",
+    "clickToSend": "לחץ על הכפתור למטה כדי לשלוח את הבקשה לבדיקה. נחזור אליך בקרוב!",
+    "back": "חזור",
+    "next": "הבא",
+    "submit": "שלח"
+  },
+  "toggleMenu": "החלף תפריט",
+  "header": {
+    "logout": "התנתק"
+  },
+  "cart": {
+    "openCart": "פתח עגלת קניות",
+    "cartTitle": "עגלה ({count})",
+    "removeItem": "הסר {name}",
+    "subtotal": "סיכום ביניים",
+    "shippingNote": "משלוח ומסים יחושבו בקופה.",
+    "checkout": "לתשלום",
+    "emptyTitle": "העגלה שלך ריקה",
+    "emptyDescription": "הוסף מאפים טעימים כדי להתחיל!"
+  },
+  "orders": {
+    "myOrders": "ההזמנות שלי",
+    "viewAndSort": "הצג ומיין את ההזמנות הקודמות והנוכחיות שלך.",
+    "orderId": "מספר הזמנה",
+    "date": "תאריך",
+    "summary": "סיכום",
+    "total": "סך הכל",
+    "status": "סטטוס",
+    "noOrders": "אין לך הזמנות עדיין."
+  },
+  "recipes": {
+    "premium": "פרימיום",
+    "reviews": "ביקורות",
+    "unlockFor": "פתח עבור ₪{price}",
+    "viewRecipe": "צפה במתכון",
+    "ourRecipes": "המתכונים שלנו",
+    "subtitle": "מהמטבח שלנו לשלך. מצא את הרפתקת האפייה הבאה שלך עם אוסף המתכונים המנוסים שלנו."
+  },
+  "signup": {
+    "title": "הרשמה",
+    "description": "הזן את פרטיך ליצירת חשבון",
+    "fullName": "שם מלא",
+    "fullNamePlaceholder": "יוסי כהן",
+    "email": "אימייל",
+    "emailPlaceholder": "m@example.com",
+    "password": "סיסמה",
+    "createAccount": "צור חשבון",
+    "orSignUpWith": "או הירשם באמצעות",
+    "signUpWithPhone": "הירשם עם טלפון",
+    "alreadyHaveAccount": "כבר יש לך חשבון?",
+    "login": "התחברות"
   }
 } 

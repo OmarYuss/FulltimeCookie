@@ -12,16 +12,19 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { ChevronDown, User, LogOut, LayoutGrid } from 'lucide-react';
 
 export default function Header() {
-  const t = useTranslations();
+  const t = useTranslations('header');
   
   const productCategories = [
-    { name: t('header.categories.cookies'), href: '/shop?tag=Cookies'},
-    { name: t('header.categories.cupcakes'), href: '/shop?tag=Cupcakes'},
-    { name: t('header.categories.cakes'), href: '/shop?tag=Cakes'},
-    { name: t('header.categories.goods'), href: '/shop?tag=Goods'},
+    { name: t('categories.cookies'), href: '/shop?tag=Cookies'},
+    { name: t('categories.cupcakes'), href: '/shop?tag=Cupcakes'},
+    { name: t('categories.cakes'), href: '/shop?tag=Cakes'},
+    { name: t('categories.goods'), href: '/shop?tag=Goods'},
   ]
   
   const navItems = [
+    { name: t('home'), href: '/' },
+    { name: t('allProducts'), href: '/shop' },
+    { name: t('recipes'), href: '/recipes' },
     { name: t('header.home'), href: '/' },
     { name: t('header.allProducts'), href: '/shop' },
     { name: t('header.recipes'), href: '/recipes' },

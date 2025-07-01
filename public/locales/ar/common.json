@@ -20,7 +20,7 @@
   },
   "home": {
     "heroTitle": "مخبوزات فنية من القلب",
-    "heroSubtitle": "اكتشف المعجنات والخبز والكعك المصنوع يدويًا بالحب وأجود المكونات.",
+    "heroSubtitle": "اكتشف المعجنات والخبز والكعك المصنوع يدوياً بالحب وأجود المكونات.",
     "shopAll": "تسوق كل المنتجات",
     "findRecipe": "ابحث عن وصفة"
   },
@@ -28,6 +28,95 @@
     "addToCart": "أضف إلى السلة",
     "quantity": "الكمية",
     "variations": "الأنواع",
-    "packageType": "نوع الحزمة"
+    "packageType": "نوع الحزمة",
+    "title": "منتجاتنا",
+    "description": "كوكيز وكعك يدوي لذيذ."
+  },
+  "login": {
+    "title": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "submit": "تسجيل الدخول"
+  },
+  "close": "إغلاق",
+  "theme": {
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام"
+  },
+  "recipe": {
+    "instructions": "التعليمات",
+    "unlockTitle": "افتح الوصفة الكاملة",
+    "unlockDescription": "احصل على وصول فوري لجميع الخطوات والنصائح من خبرائنا.",
+    "unlockFor": "افتح مقابل ₪{price}"
+  },
+  "specialOrder": {
+    "basics": "الأساسيات",
+    "type": "النوع",
+    "typePlaceholder": "اختر نوعًا",
+    "cake": "كيك",
+    "cookies": "كوكيز",
+    "otherBakedGoods": "مخبوزات أخرى",
+    "contains": "المحتوى",
+    "containsPlaceholder": "ما الذي يجب أن يحتوي عليه؟",
+    "description": "الوصف",
+    "descriptionPlaceholder": "صف طلبك",
+    "detailsAndInspiration": "التفاصيل والإلهام",
+    "requestedDueDate": "تاريخ التسليم المطلوب (اختياري)",
+    "pickADate": "اختر تاريخًا",
+    "inspiration": "إلهام",
+    "inspirationLink": "الصق رابط الإلهام",
+    "or": "أو",
+    "fileUploadsNotSupported": "تحميل الملفات غير مدعوم بعد. يرجى استخدام رابط في الوقت الحالي.",
+    "readyToSubmit": "جاهز للإرسال؟",
+    "clickToSend": "انقر على الزر أدناه لإرسال طلبك للمراجعة. سنعود إليك قريبًا!",
+    "back": "رجوع",
+    "next": "التالي",
+    "submit": "إرسال"
+  },
+  "header": {
+    "logout": "تسجيل الخروج"
+  },
+  "cart": {
+    "openCart": "افتح سلة التسوق",
+    "cartTitle": "السلة ({count})",
+    "removeItem": "إزالة {name}",
+    "subtotal": "المجموع الفرعي",
+    "shippingNote": "سيتم حساب الشحن والضرائب عند الدفع.",
+    "checkout": "الدفع",
+    "emptyTitle": "سلتك فارغة",
+    "emptyDescription": "أضف بعض الحلويات اللذيذة للبدء!"
+  },
+  "orders": {
+    "myOrders": "طلباتي",
+    "viewAndSort": "عرض وفرز الطلبات السابقة والحالية.",
+    "orderId": "رقم الطلب",
+    "date": "التاريخ",
+    "summary": "الملخص",
+    "total": "الإجمالي",
+    "status": "الحالة",
+    "noOrders": "ليس لديك أي طلبات بعد."
+  },
+  "recipes": {
+    "premium": "مميز",
+    "reviews": "تقييمات",
+    "unlockFor": "افتح مقابل ₪{price}",
+    "viewRecipe": "عرض الوصفة",
+    "ourRecipes": "وصفاتنا",
+    "subtitle": "من مطبخنا إلى مطبخك. اكتشف مغامرتك التالية في الخبز مع مجموعتنا من الوصفات المجربة."
+  },
+  "signup": {
+    "title": "إنشاء حساب",
+    "description": "أدخل معلوماتك لإنشاء حساب",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "محمد أحمد",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "m@example.com",
+    "password": "كلمة المرور",
+    "createAccount": "إنشاء حساب",
+    "orSignUpWith": "أو سجل باستخدام",
+    "signUpWithPhone": "سجل باستخدام الهاتف",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول"
   }
 } 

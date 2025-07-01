@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { Lock } from 'lucide-react';
 import { useCartStore } from '@/stores/cart-store';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslations } from 'next-intl';
 
 interface RecipePaywallProps {
   recipe: Recipe;
@@ -15,6 +16,7 @@ export function RecipePaywall({ recipe }: RecipePaywallProps) {
   const [isUnlocked, setIsUnlocked] = useState(!recipe.isPaid);
   const addItem = useCartStore((state) => state.addItem);
   const { toast } = useToast();
+  const t = useTranslations('recipe');
 
   const handleUnlock = () => {
     // In a real app, this would involve a checkout process.
@@ -44,7 +46,7 @@ export function RecipePaywall({ recipe }: RecipePaywallProps) {
 
   return (
     <div>
-      <h3 className="text-2xl font-headline mt-8 mb-4">Instructions</h3>
+      <h3 className="text-2xl font-headline mt-8 mb-4">{t('instructions')}</h3>
       <div className="relative">
         <ol className="list-decimal list-inside space-y-4 text-lg">
           {recipe.instructions.slice(0, stepsToShow).map((step, index) => (
@@ -56,12 +58,10 @@ export function RecipePaywall({ recipe }: RecipePaywallProps) {
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-t from-background via-background/80 to-background/50 pt-32">
             <div className="text-center p-8 bg-card/80 backdrop-blur-sm rounded-lg shadow-xl border">
               <Lock className="mx-auto h-12 w-12 text-primary mb-4" />
-              <h4 className="text-2xl font-headline font-bold">Unlock the Full Recipe</h4>
-              <p className="text-muted-foreground mt-2 mb-6">
-                Get instant access to all steps, tips, and tricks from our expert bakers.
-              </p>
+              <h4 className="text-2xl font-headline font-bold">{t('unlockTitle')}</h4>
+              <p className="text-muted-foreground mt-2 mb-6">{t('unlockDescription')}</p>
               <Button size="lg" onClick={handleUnlock}>
-                Unlock for ₪{recipe.price.toFixed(2)}
+                {t('unlockFor', { price: recipe.price.toFixed(2) })}
               </Button>
             </div>
           </div>

@@ -16,8 +16,10 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { ShoppingCart, Trash2 } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 export function CartSheet() {
+  const t = useTranslations('cart')
   const items = useCartStore((state) => state.items);
   const removeItem = useCartStore((state) => state.removeItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
@@ -31,7 +33,7 @@ export function CartSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="relative" aria-label="Open shopping cart">
+        <Button variant="outline" size="icon" className="relative" aria-label={t('openCart')}>
           <ShoppingCart className="h-5 w-5" />
           {itemCount > 0 && (
             <span className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
@@ -42,7 +44,7 @@ export function CartSheet() {
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
         <SheetHeader className="px-6">
-          <SheetTitle>Cart ({itemCount})</SheetTitle>
+          <SheetTitle>{t('cartTitle', { count: itemCount })}</SheetTitle>
         </SheetHeader>
         <Separator />
         {itemCount > 0 ? (
@@ -73,7 +75,7 @@ export function CartSheet() {
                           className="h-8 w-16"
                           onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
                         />
-                        <Button variant="ghost" size="icon" onClick={() => removeItem(item.id)} aria-label={`Remove ${item.name}`}>
+                        <Button variant="ghost" size="icon" onClick={() => removeItem(item.id)} aria-label={t('removeItem', { name: item.name })}>
                            <Trash2 className="h-4 w-4 text-muted-foreground" />
                         </Button>
                       </div>
@@ -86,12 +88,12 @@ export function CartSheet() {
             <SheetFooter className="p-6">
               <div className="flex w-full flex-col gap-4">
                  <div className="flex justify-between text-lg font-semibold">
-                  <span>Subtotal</span>
+                  <span>{t('subtotal')}</span>
                   <span>₪{subtotal.toFixed(2)}</span>
                 </div>
-                <p className="text-sm text-muted-foreground">Shipping and taxes calculated at checkout.</p>
+                <p className="text-sm text-muted-foreground">{t('shippingNote')}</p>
                 <SheetClose asChild>
-                  <Button className="w-full">Checkout</Button>
+                  <Button className="w-full">{t('checkout')}</Button>
                 </SheetClose>
               </div>
             </SheetFooter>
@@ -101,8 +103,8 @@ export function CartSheet() {
             <div className="rounded-full border-4 border-dashed p-8">
               <ShoppingCart className="h-16 w-16 text-muted-foreground" />
             </div>
-            <h2 className="text-2xl font-headline">Your cart is empty</h2>
-            <p className="text-muted-foreground">Add some delicious treats to get started!</p>
+            <h2 className="text-2xl font-headline">{t('emptyTitle')}</h2>
+            <p className="text-muted-foreground">{t('emptyDescription')}</p>
           </div>
         )}
       </SheetContent>

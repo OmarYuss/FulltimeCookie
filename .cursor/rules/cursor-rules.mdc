@@ -4,6 +4,12 @@ globs:
 alwaysApply: false
 ---
 ## CORE DEVELOPMENT PRINCIPLES
+
+0. **Backtrack logic**
+    - Always remember what you were doing, what the end goal is, what changes have been made.
+    - How changes made would affect what has been worked on previously.
+    - Remember that we are using Next.js 15 and there are changes need to be respected with the releseas of Next 15 compared to previous Next 14.
+
 1. **Type Safety First**
    - Always use TypeScript interfaces for props/state
    - Zero `any` types allowed - use `unknown` with type guards
@@ -13,7 +19,7 @@ alwaysApply: false
 interface Product {
   id: string;
   name: string;
-  price: number; // Always in USD
+  price: number; // Always in NIS
 }
 
 // API validation

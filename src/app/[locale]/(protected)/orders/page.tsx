@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { useI18n } from '@/context/i18n-context';
 import { Button } from '@/components/ui/button';
 import { ArrowUp, ArrowDown, ChevronsUpDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const statusVariantMap: Record<OrderStatus, 'default' | 'secondary' | 'destructive'> = {
   'Pending': 'secondary',
@@ -26,7 +27,8 @@ const statusVariantMap: Record<OrderStatus, 'default' | 'secondary' | 'destructi
 type SortKey = keyof Order | null;
 
 export default function MyOrdersPage() {
-    const { t } = useI18n();
+    const t = useTranslations('orders');
+    const { t: i18nT } = useI18n();
     const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>({ key: 'date', direction: 'desc' });
 
     const sortedOrders = useMemo(() => {
@@ -78,25 +80,25 @@ export default function MyOrdersPage() {
     <div className="container py-12 md:py-16">
       <Card>
         <CardHeader>
-          <CardTitle>My Orders</CardTitle>
-          <CardDescription>View and sort your past and current orders.</CardDescription>
+          <CardTitle>{t('myOrders')}</CardTitle>
+          <CardDescription>{t('viewAndSort')}</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Order ID</TableHead>
+                <TableHead>{t('orderId')}</TableHead>
                 <TableHead className="cursor-pointer" onClick={() => requestSort('date')}>
                     <div className="flex items-center">
-                        Date
+                        {t('date')}
                         {getSortIcon('date')}
                     </div>
                 </TableHead>
-                <TableHead>Summary</TableHead>
-                <TableHead>Total</TableHead>
+                <TableHead>{t('summary')}</TableHead>
+                <TableHead>{t('total')}</TableHead>
                 <TableHead className="cursor-pointer" onClick={() => requestSort('status')}>
                     <div className="flex items-center">
-                        Status
+                        {t('status')}
                         {getSortIcon('status')}
                     </div>
                 </TableHead>
@@ -117,7 +119,7 @@ export default function MyOrdersPage() {
               {mockOrders.length === 0 && (
                 <TableRow>
                     <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
-                        You have no orders yet.
+                        {t('noOrders')}
                     </TableCell>
                 </TableRow>
               )}

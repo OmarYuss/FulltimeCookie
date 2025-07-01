@@ -3,9 +3,8 @@ import { unstable_setRequestLocale } from 'next-intl/server';
 import '@/styles/globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
-import DirectionProvider from "@/components/providers/direction-provider";
 import { Metadata } from "next";
-import { locales } from "@/config/i18n";
+import { locales, localeDetails } from "@/config/i18n";
 
 export const metadata: Metadata = {
   title: 'Fulltime Cookie',
@@ -23,13 +22,14 @@ export function generateStaticParams() {
 
 export default function RootLayout({
   children,
-  params: { locale }
+  params,
 }: RootLayoutProps) {
+  const { locale } = params;
   unstable_setRequestLocale(locale);
   const messages = useMessages();
 
   return (
-    <html lang={locale} dir={locale === 'ar' || locale === 'he' ? 'rtl' : 'ltr'} suppressHydrationWarning>
+    <html lang={locale} dir={localeDetails[locale as keyof typeof localeDetails]?.dir || 'ltr'} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -37,15 +37,13 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <DirectionProvider>
-            <ThemeProvider
-              defaultTheme="system"
-              storageKey="ui-theme"
-            >
-              {children}
-              <Toaster />
-            </ThemeProvider>
-          </DirectionProvider>
+          <ThemeProvider
+            defaultTheme="system"
+            storageKey="ui-theme"
+          >
+            {children}
+            <Toaster />
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

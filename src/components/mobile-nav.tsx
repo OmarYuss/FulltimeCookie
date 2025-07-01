@@ -17,6 +17,7 @@ type NavItem = {
 export function MobileNav() {
   const [open, setOpen] = React.useState(false)
   const t = useTranslations('nav')
+  const tCommon = useTranslations('common')
 
   const navItems: NavItem[] = [
     { href: "/shop", label: t('shop') },
@@ -34,7 +35,7 @@ export function MobileNav() {
           className="px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
         >
           <Menu className="h-6 w-6" />
-          <span className="sr-only">Toggle Menu</span>
+          <span className="sr-only">{tCommon('toggleMenu', { defaultValue: 'Toggle Menu' })}</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="pr-0">
@@ -45,11 +46,11 @@ export function MobileNav() {
             onClick={() => setOpen(false)}
           >
             <Logo />
-            <span className="sr-only">Home</span>
+            <span className="sr-only">{t('home')}</span>
           </Link>
           <SheetClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
             <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{tCommon('close')}</span>
           </SheetClose>
         </div>
         <Separator className="mb-4" />
