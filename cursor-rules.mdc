@@ -1,0 +1,296 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## CORE DEVELOPMENT PRINCIPLES
+
+0. **Backtrack logic**
+    - Always remember what you were doing, what the end goal is, what changes have been made.
+    - How changes made would affect what has been worked on previously.
+    - Remember that we are using Next.js 15 and there are changes need to be respected with the releseas of Next 15 compared to previous Next 14.
+
+1. **Type Safety First**
+   - Always use TypeScript interfaces for props/state
+   - Zero `any` types allowed - use `unknown` with type guards
+   - Validate all inputs with Zod schemas
+
+   // Zero 'any' policy
+interface Product {
+  id: string;
+  name: string;
+  price: number; // Always in NIS
+}
+
+// API validation
+const ProductSchema = z.object({
+  name: z.string().min(2),
+  price: z.number().positive()
+});
+
+
+2. **Component Design Rules**
+   - Keep components under 200 lines
+   - Follow atomic design structure:
+        Atoms → Molecules → Organisms → Templates
+   - Always separate:
+        - Presentational components (UI only)
+        - Container components (logic/data)
+        - Hooks (business logic)
+
+3. **Performance Constraints**
+   - Memoize components with `React.memo`
+   - Debounce expensive operations (search/filters)
+   - Lazy load images with Next.js Image component
+   - Split chunks > 50KB
+
+
+4. **TODO lists**
+   - Always include a TODO list and refer to it before making changes.
+        
+   - Consequential thinking, always refer to your plan, keep in reference the initial plan, workflow and end goal.
+
+5. **Critique Workflow (Mandatory)**
+   Before accepting any solution:
+   1. Security Audit: "Identify potential XSS/SQLi vectors"
+   2. Performance Check: "Will this cause re-render issues?"
+   3. Accessibility Scan: "Verify WCAG 2.1 AA compliance"
+   4. Edge Case Test: "What happens when API returns 404?"
+
+6. **Fallback Procedure**
+   If solution fails:
+   ```prompt
+   /fix --strategy stepwise
+   /explain --detail technical
+   /ask "What alternative approaches exist?"
+
+## GIT WORKFLOW RULES
+
+7. **Branch Naming Convention**
+    feat/short-description   # New features
+    fix/bug-description      # Bug fixes
+    refactor/<component-name>          # Code improvements
+    chore/<task>                       # Maintenance tasks
+    i18n/<locale>/<feature>    # Translation work
+   
+8. **Commit Message Standards**
+    ## Format:
+    <type>(<scope>): <subject>
+    [Optional body]
+    Valid types:
+
+    feat: New functionality
+
+    fix: Bug resolution
+
+    docs: Documentation updates
+
+    style: Code formatting
+
+    refactor: Code restructuring
+
+    perf: Performance improvements
+
+    test: Test additions
+
+    chore: Maintenance tasks
+
+    i18n: Translations implemntations
+
+    ## EXAMPLE:
+    feat(checkout): add stripe payment integration
+
+    - Implemented Stripe Elements
+    - Added 3D Secure handling
+    - Created success/error flows
+
+9. **Commit Validation Rules**
+
+    No console.log in production code
+
+    Passing ESLint with strict rules:
+    "no-any": "error"
+    "react-hooks/exhaustive-deps": "warn"
+
+## PUSH STRATEGY
+
+10. **Pre-Push Checklist**
+
+    - Run tests: npm test
+
+    - Verify type safety: tsc --noEmit
+
+    - Check bundle size: npm run analyze
+
+    - Confirm no secrets in code
+
+11. **Logical Grouping Principle**
+
+    - 1 feature = 1 branch = 1-3 focused commits
+
+    - Never combine unrelated changes
+
+    - Atomic commits that can be cherry-picked
+
+12. **PR Creation Protocol**
+    
+    - Title format: [Area] Brief description
+
+    Template:
+
+## What's changed
+ - Point 1
+ - Point 2
+
+## Testing done
+- [ ] Test case 1
+- [ ] Test case 2
+
+## Security impact
+[Verification of security checks]
+
+## Performance data
+
+[Bundle size before/after]
+
+
+
+
+## PROJECT-SPECIFIC CONSTRAINTS
+13. **Bakery Domain Rules**
+
+- Always separate recipe/content CMS from products
+
+- Special orders require admin approval workflow
+
+- Never show out-of-stock items as purchasable
+
+14. **Strict Forbiddens**
+❌ No direct database access from frontend
+❌ No Firebase SDK in component layer
+❌ No inline styles except dynamic values
+❌ No generic component names (Button → PrimaryButton)
+❌ Hardcoded text in components
+❌ Fixed-direction CSS (left/right)
+❌ Locale-specific formatting without hooks
+❌ Mixing translation keys across features
+
+15. **Performance Budget**
+
+- First Contentful Paint: < 1.5s
+
+- JS Bundle: < 150KB gzipped
+
+
+- API response: < 300ms
+
+16. **I18N AGENT RULES**
+
+## CORE PRINCIPLES
+    graph TD
+
+  A[Locale Detection] --> B[Content Abstraction]
+  B --> C[RTL Adaptation]
+  C --> D[Formatting]
+  D --> E[Fallbacks]
+
+## Implementation rules
+
+17. **File Structure Enforcement**
+
+public/locales/
+├── en/
+│   ├── common.json
+│   ├── product.json
+│   └── checkout.json
+├── ar/ # Arabic (RTL)
+│   ├── common.json
+│   └── ...
+└── he/ # Hebrew (RTL)
+    ├── common.json
+    └── ...
+
+18. **Component Development Rules**
+
+##Example:
+
+// components/ProductCard.tsx
+import {useTranslations} from 'next-intl';
+
+export default function ProductCard() {
+  const t = useTranslations('Product');
+  return <h3>{t('price')}</h3>; // Never hardcode text
+}
+
+19. **RTL Requirements**
+
+// providers/DirectionProvider.tsx
+export default function DirectionProvider({children}) {
+  const locale = useLocale();
+  const dir = ['ar', 'he'].includes(locale) ? 'rtl' : 'ltr';
+  return <div dir={dir} lang={locale}>{children}</div>;
+}
+
+20. **Formatting Protocol**
+
+// Number formatting
+new Intl.NumberFormat(locale).format(price)
+
+// Date formatting
+new Intl.DateTimeFormat(locale, {dateStyle: 'long'}).format(orderDate)
+
+21. **Fallback Strategy**
+
+function t(key: string, locale: string) {
+  return translations[locale][key] 
+    ?? translations['en'][key] 
+    ?? `[MISSING: ${key}]`;
+}
+
+22. **Branch Naming**
+
+`i18n/ar/checkout-flow`
+
+## Commit Message Example
+i18n[he]: add recipe page translations
+
+• Implemented RTL form layouts
+• Added Hebrew measurement units
+• Fixed calendar display formatting
+
+23. **File/folder Naming**
+
+Illegal Filename Characters
+Do not use any of these common illegal characters or symbols in your filenames or folders:
+
+"#" pound
+"%" percent
+"&" ampersand
+"{" left curly bracket
+"}" right curly bracket
+"\" back slash
+"<" left angle bracket
+">" right angle bracket
+"*" asterisk
+"?" question mark
+"/" forward slash
+" " blank spaces
+"$" dollar sign
+"!" exclamation point
+"'" single quotes
+""" double quotes
+":" colon
+"@" at sign
+"+" plus sign
+"`" backtick
+"|" pipe
+"=" equal sign
+emojis
+alt codes
+In addition to forbidden characters, keep these rules in mind when choosing a folder name or filename:
+
+Don't start or end your filename with a space, period, hyphen, or underline.
+Keep your filenames to a reasonable length and be sure they are under 31 characters.
+Most operating systems are case sensitive; always use lowercase.
+Avoid using spaces and underscores; use a hyphen instead. This will also improve your search engine rankings.
+Non-ASCII characters need to be escaped.

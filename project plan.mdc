@@ -1,0 +1,44 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+### **Critical Consequential Roadmap**
+1. **Foundation Phase (MUST DO FIRST):**
+   - i18n routing system
+   - Auth provider configuration
+   - PostgreSQL schema with RLS
+   - CI/CD pipeline setup
+
+2. **Core Functionality:**
+   - Product/recipe listings (SSG)
+   - Shopping cart context
+   - Special order state machine
+   - Payment gateway (Stripe)
+
+3. **Enhanced Features:**
+   - Real-time notifications (Pusher)
+   - Admin dashboard with analytics
+   - PDF watermarking for recipes
+   - Animated UI components
+
+4. **Optimization Phase:**
+   - Static page regeneration
+   - Database indexing
+   - Lazy loading
+   - RTL performance testing
+
+5. **Special Order Flow:**
+
+sequenceDiagram
+    User->>Backend: Submit special order (description + images)
+    Backend->>Admin: Real-time notification
+    Admin->>Backend: Propose price (PATCH /orders/:id)
+    Backend->>User: Push notification/email
+    alt User accepts
+        User->>Backend: PATCH /orders/:id/accept
+        Backend->>Admin: Trigger order fulfillment
+    else User rejects
+        User->>Backend: PATCH /orders/:id/reject
+        Backend->>DB: Mark as rejected
+    end
